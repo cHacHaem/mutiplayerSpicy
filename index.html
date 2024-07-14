@@ -3,9 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="https://glitch.com/favicon.ico" />
-   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
-
+<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.min.js"></script>
     <!--
       This is the page head - it contains info the browser uses
       Like the title, which appears on the browser tab but not inside the page
@@ -14,8 +13,22 @@
     <title>Hello World!</title>
   </head>
   <body>
-<a-scene physics="driver: ammo; debug: true">
-  <!-- Your entities here -->
+<!-- The debug:true option creates a wireframe around each physics body. If you don't see a wireframe,
+     the physics system may be unable to parse your model without a shape:box or shape:hull option. -->
+<a-scene physics="debug: true">
+
+  <!-- Camera -->
+  
+  <a-camera position="0 0 5" ></a-camera>
+  <!-- Floor -->
+  <a-plane static-body></a-plane>
+
+  <!-- Immovable box -->
+  <a-box static-body position="0 0.5 0" width="3" height="1" depth="1"></a-box>
+
+  <!-- Dynamic box -->
+  <a-box id="nyan" dynamic-body position="0 3 0" width="1" height="1" depth="1"></a-box>
+
 </a-scene>
 
 
