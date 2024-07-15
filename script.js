@@ -3,6 +3,27 @@ AFRAME.registerComponent('player-controls', {
     this.keys = {};
     this.forceAmount = 100; // Adjust this value for the desired movement speed
 
+    this.el.addEventListener('body-loaded', () => {
+      const el = this.el;
+
+      // Create a custom material with zero friction
+      const zeroFrictionMaterial = new CANNON.Material('zeroFrictionMaterial');
+      const zeroFrictionContactMaterial = new CANNON.ContactMaterial(
+        zeroFrictionMaterial,
+        zeroFrictionMaterial,
+        {
+          friction: 0,
+          restitution: 0.3 // You can adjust the restitution (bounciness) as needed
+        }
+      );
+
+      el.body.material = zeroFrictionMaterial;
+      el.body.world.addContactMaterial(zeroFrictionContactMaterial);
+
+      // Prevent rotation
+      el.body.angularFactor.set(0, 0, 0);
+    });
+
     document.addEventListener("keydown", (event) => {
       this.keys[event.key] = true;
     });
