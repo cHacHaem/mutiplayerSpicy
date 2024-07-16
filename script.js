@@ -25,19 +25,11 @@ AFRAME.registerComponent('player-controls', {
       // Prevent rotation
       el.body.angularFactor.set(0, 0, 0);
 
-      // Listen for collisions to determine if the player is touching the ground
+      // Listen for collisions to determine if the player is touching a static body
       el.body.addEventListener('collide', (event) => {
         // Check if the collision is with a static body
-        console.log(event)
         if (event.body.mass === 0) {
-          // Iterate through the contact points to check the collision normal
-          for (let i = 0; i < event.contact.ni.length; i++) {
-            const contactNormal = event.contact.ni[i];
-            if (contactNormal.y > 0.5) { // Adjust this threshold as needed
-              this.canJump = true; // Player is touching the top of a static body
-              return;
-            }
-          }
+          this.canJump = true; // Player is touching a static body
         }
       });
     });
@@ -63,29 +55,31 @@ AFRAME.registerComponent('player-controls', {
     const forceAmount = this.forceAmount;
 
     if (this.keys['w'] || this.keys['ArrowUp']) {
-      force.x += cameraWorldDirection.x * forceAmount;
-      force.z += cameraWorldDirection.z * forceAmount;
-    }
-    if (this.keys['s'] || this.keys['ArrowDown']) {
       force.x -= cameraWorldDirection.x * forceAmount;
       force.z -= cameraWorldDirection.z * forceAmount;
     }
-    if (this.keys['a'] || this.keys['ArrowLeft']) {
-      force.x += cameraWorldDirection.z * forceAmount;
-      force.z -= cameraWorldDirection.x * forceAmount;
+    if (this.keys['s'] || this.keys['ArrowDown']) {
+      force.x += cameraWorldDirection.x * forceAmount;
+      force.z += cameraWorldDirection.z * forceAmount;
     }
-    if (this.keys['d'] || this.keys['ArrowRight']) {
+    if (this.keys['a'] || this.keys['ArrowLeft']) {
       force.x -= cameraWorldDirection.z * forceAmount;
       force.z += cameraWorldDirection.x * forceAmount;
     }
+    if (this.keys['d'] || this.keys['ArrowRight']) {
+      force.x += cameraWorldDirection.z * forceAmount;
+      force.z -= cameraWorldDirection.x * forceAmount;
+    }
     if (this.keys[' '] && this.canJump) { // Spacebar for jump
-      force.y += forceAmount*500;
+      force.y += forceAmount*10;
       this.canJump = false; // Reset jump ability until player lands again
     }
 
     if (!force.almostZero()) {
       el.body.applyForce(force, el.body.position);
     }
+    force.x=0;
+    force.z=0;
   }
 });
 
