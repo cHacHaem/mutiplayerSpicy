@@ -1,27 +1,11 @@
 AFRAME.registerComponent('player-controls', {
   init: function () {
     this.keys = {};
-    this.forceAmount = 100; // Adjust this value for the desired movement speed
+    this.forceAmount = 200; // Adjust this value for the desired movement speed
     this.canJump = false; // To track if the player can jump
 
     this.el.addEventListener('body-loaded', () => {
       const el = this.el;
-
-      // Create a custom material with zero friction
-      const zeroFrictionMaterial = new CANNON.Material('zeroFrictionMaterial');
-      const zeroFrictionContactMaterial = new CANNON.ContactMaterial(
-        zeroFrictionMaterial,
-        zeroFrictionMaterial,
-        {
-          friction: 0,
-          restitution: 0.3 // Adjust as needed
-        }
-      );
-
-      // Apply the zero friction material to the player's body
-      el.body.material = zeroFrictionMaterial;
-      el.body.world.addContactMaterial(zeroFrictionContactMaterial);
-
       // Prevent rotation
       el.body.angularFactor.set(0, 0, 0);
 
@@ -50,7 +34,6 @@ AFRAME.registerComponent('player-controls', {
     camera.object3D.getWorldDirection(cameraWorldDirection); // Get the camera's forward direction
     cameraWorldDirection.y = 0; // Ignore vertical direction for movement
     cameraWorldDirection.normalize(); // Normalize the vector
-
     const force = new CANNON.Vec3();
     const forceAmount = this.forceAmount;
 
@@ -78,8 +61,6 @@ AFRAME.registerComponent('player-controls', {
     if (!force.almostZero()) {
       el.body.applyForce(force, el.body.position);
     }
-    force.x=0;
-    force.z=0;
   }
 });
 
