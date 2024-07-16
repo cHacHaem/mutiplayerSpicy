@@ -3,6 +3,8 @@ AFRAME.registerComponent('player-controls', {
     this.keys = {};
     this.forceAmount = 200; // Adjust this value for the desired movement speed
     this.canJump = false; // To track if the player can jump
+    this.touchingGround = false; // To track if the player is touching the ground
+    this.touchingRightSide = false; // To track if the player is touching the right side
 
     this.el.addEventListener('body-loaded', () => {
       const el = this.el;
@@ -13,7 +15,17 @@ AFRAME.registerComponent('player-controls', {
       el.body.addEventListener('collide', (event) => {
         // Check if the collision is with a static body
         if (event.body.mass === 0) {
-          this.canJump = true; // Player is touching a static body
+          // Iterate through the contact points to check the collision normal
+          for (let i = 0; i < event.contact.ni.length; i++) {
+            const contactNormal = event.contact.ni[i];
+            console.log(contactNormal)
+            if (contactNormal.y > 0.5) { // Adjust this threshold as needed
+              this.touchingGround = true; // Player is touching the top of a static body
+            }
+            if (contactNormal.x < -0.5) { // Adjust this threshold as needed
+              this.touchingRightSide = true; // Player is touching the right side of a static body
+            }
+          }
         }
       });
     });
@@ -24,6 +36,7 @@ AFRAME.registerComponent('player-controls', {
 
     document.addEventListener('keyup', (event) => {
       this.keys[event.key] = false;
+      this.touchingRightSide = false; // Reset the touching right side when key is released
     });
   },
 
@@ -34,6 +47,7 @@ AFRAME.registerComponent('player-controls', {
     camera.object3D.getWorldDirection(cameraWorldDirection); // Get the camera's forward direction
     cameraWorldDirection.y = 0; // Ignore vertical direction for movement
     cameraWorldDirection.normalize(); // Normalize the vector
+
     const force = new CANNON.Vec3();
     const forceAmount = this.forceAmount;
 
@@ -53,9 +67,9 @@ AFRAME.registerComponent('player-controls', {
       force.x += cameraWorldDirection.z * forceAmount;
       force.z -= cameraWorldDirection.x * forceAmount;
     }
-    if (this.keys[' '] && this.canJump) { // Spacebar for jump
-      force.y += forceAmount*10;
-      this.canJump = false; // Reset jump ability until player lands again
+    if (this.keys[' '] && this.touchingGround) { // Spacebar for jump
+      force.y += forceAmount * 10;
+      this.touchingGround = false; // Reset touchingGround until player lands
     }
 
     if (!force.almostZero()) {
