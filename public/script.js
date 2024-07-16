@@ -4,7 +4,6 @@ AFRAME.registerComponent('player-controls', {
     this.forceAmount = 200; // Adjust this value for the desired movement speed
     this.canJump = false; // To track if the player can jump
     this.touchingGround = false; // To track if the player is touching the ground
-    this.touchingRightSide = false; // To track if the player is touching the right side
 
     this.el.addEventListener('body-loaded', () => {
       const el = this.el;
@@ -15,17 +14,20 @@ AFRAME.registerComponent('player-controls', {
       el.body.addEventListener('collide', (event) => {
         // Check if the collision is with a static body
         if (event.body.mass === 0) {
-          // Iterate through the contact points to check the collision normal
-          for (let i = 0; i < event.contact.ni.length; i++) {
-            const contactNormal = event.contact.ni[i];
-            console.log(contactNormal)
-            if (contactNormal.y > 0.5) { // Adjust this threshold as needed
-              this.touchingGround = true; // Player is touching the top of a static body
-            }
-            if (contactNormal.x < -0.5) { // Adjust this threshold as needed
-              this.touchingRightSide = true; // Player is touching the right side of a static body
-            }
+          const contact = event.contact;
+          // Check the contact normal to determine if the player is on top of the body
+          const contactNormal = contact.ni.clone();
+          contactNormal.negate(contactNormal); // Flip the normal direction
+
+          if (contactNormal.y > 0.5) { // Adjust this threshold as needed
+            this.touchingGround = true; // Player is touching the top of a static body
           }
+        }
+      });
+
+      el.body.addEventListener('endContact', (event) => {
+        if (event.body.mass === 0) {
+          this.touchingGround = false; // Reset touchingGround when contact ends
         }
       });
     });
@@ -36,7 +38,6 @@ AFRAME.registerComponent('player-controls', {
 
     document.addEventListener('keyup', (event) => {
       this.keys[event.key] = false;
-      this.touchingRightSide = false; // Reset the touching right side when key is released
     });
   },
 
@@ -69,7 +70,7 @@ AFRAME.registerComponent('player-controls', {
     }
     if (this.keys[' '] && this.touchingGround) { // Spacebar for jump
       force.y += forceAmount * 10;
-      this.touchingGround = false; // Reset touchingGround until player lands
+      this.touchingGround = false; // Reset touchingGround until player lands again
     }
 
     if (!force.almostZero()) {
@@ -79,3 +80,4 @@ AFRAME.registerComponent('player-controls', {
 });
 
 document.querySelector('#player').setAttribute('player-controls', '');
+ 
