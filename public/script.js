@@ -99,5 +99,7 @@ AFRAME.registerComponent('player-controls', {
     socket.emit('updatePosition', { playerId: this.playerId, position });
   }
 });
-socket.emit("message", "hhhhh")
+document.addEventListener("click", ()=>{
+  socket.emit("message", "hhhhh")
+})
 document.querySelector('#player').setAttribute('player-controls', '');
