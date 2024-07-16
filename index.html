@@ -9,14 +9,14 @@
   <title>Hello World!</title>
 </head>
 <body>
-  <a-scene physics="debug: true; friction:0">
-    <a-box id="player" dynamic-body position="0 5 0">
-      <a-camera position="0 1.6 0" wasd-controls="enabled: false" id="cam"></a-camera>
-    </a-box>
-    <a-entity environment="preset: forest"></a-entity>
-    <a-box id="floor" color="green" static-body position="0 -1 0" width="40" height="1" depth="40"></a-box>
-  </a-scene>
+<a-scene physics="debug: true; defaultContactMaterial: {friction: 0, restitution: 0.3}">
+  <a-box id="player" dynamic-body position="0 5 0">
+    <a-camera position="0 1.6 0" wasd-controls="enabled: false" id="cam"></a-camera>
+  </a-box>
+  <a-entity environment="preset: forest"></a-entity>
+  <a-box id="floor" color="green" static-body position="0 -1 0" width="40" height="1" depth="40"></a-box>
+</a-scene>
 
-  <script src="/script.js"></script>
+<script src="/script.js"></script>
 </body>
 </html>
