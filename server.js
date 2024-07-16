@@ -1,22 +1,29 @@
-// server.js
-// where your node app starts
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
 
-// init project
-const express = require("express");
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 
-// we've started you off with Express,
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
+const PORT = process.env.PORT || 3000;
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static("public"));
+// Serve static files
+app.use(express.static('public'));
 
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function(request, response) {
-  response.sendFile(__dirname + "/views/");
+io.on('connection', (socket) => {
+  console.log('New client connected');
+
+  // Listen for position updates from clients
+  socket.on('message', (data) => {
+    // Broadcast the position update to all other clients
+    console.log(data)
+    socket.broadcast.emit('playerMoved', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
 });
 
-// listen for requests :)
-const listener = app.listen(process.env.PORT, function() {
-  console.log("Your app is listening on port " + listener.address().port);
-});
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

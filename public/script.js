@@ -1,9 +1,13 @@
+const socket = io();
+
 AFRAME.registerComponent('player-controls', {
   init: function () {
     this.keys = {};
     this.forceAmount = 200; // Adjust this value for the desired movement speed
     this.canJump = false; // To track if the player can jump
     this.touchingGround = false; // To track if the player is touching the ground
+    this.el.id = 'player'; // Ensure player ID is unique
+    this.playerId = socket.id; // Store player ID
 
     this.el.addEventListener('body-loaded', () => {
       const el = this.el;
@@ -38,6 +42,19 @@ AFRAME.registerComponent('player-controls', {
 
     document.addEventListener('keyup', (event) => {
       this.keys[event.key] = false;
+    });
+
+    // Listen for other players' movements
+    socket.on('playerMoved', (data) => {
+      let otherPlayer = document.getElementById(data.playerId);
+      if (!otherPlayer) {
+        otherPlayer = document.createElement('a-sphere');
+        otherPlayer.setAttribute('dynamic-body', '');
+        otherPlayer.setAttribute('position', '0 5 0');
+        otherPlayer.id = data.playerId;
+        document.querySelector('a-scene').appendChild(otherPlayer);
+      }
+      otherPlayer.setAttribute('position', data.position);
     });
   },
 
@@ -76,8 +93,11 @@ AFRAME.registerComponent('player-controls', {
     if (!force.almostZero()) {
       el.body.applyForce(force, el.body.position);
     }
+
+    // Emit player's position to the server
+    const position = el.getAttribute('position');
+    socket.emit('updatePosition', { playerId: this.playerId, position });
   }
 });
-
+socket.emit("message", "hhhhh")
 document.querySelector('#player').setAttribute('player-controls', '');
- 
