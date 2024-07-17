@@ -14,10 +14,10 @@ app.use(express.static("public"));
 
 // Chatroom
 io.on("connection", function (socket) {
-  socket.on("position update", function (data) {
+  socket.on("player update", function (data) {
     console.log(data);
     // we tell the client to execute 'new message'
-    socket.broadcast.emit("position update", data);
+    socket.broadcast.emit("player update", data);
   });
 
   socket.on("disconnect", function () {
