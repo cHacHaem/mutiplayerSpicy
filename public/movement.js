@@ -95,11 +95,12 @@ AFRAME.registerComponent('player-controls', {
     }
 
     // Emit player's position to the server
-    const position = el.getAttribute('position');
-    socket.emit('position update', { playerId: this.playerId, position });
+
   }
 });
 document.addEventListener("click", ()=>{
   socket.emit("message", "hhhhh")
 })
+    //const position = document.querySelector.getAttribute('position');
+    //socket.emit('position update', { playerId: this.playerId, position });
 document.querySelector('#player').setAttribute('player-controls', '');
