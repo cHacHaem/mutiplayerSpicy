@@ -15,6 +15,7 @@ socket.on("player update", (stuff) =>{
     players[stuff.id] = newPlayer;
     scene.appendChild(newPlayer);
   } else if(stuff.id in players) {
+    stuff.position.y += 1
     players[stuff.id].setAttribute("position", stuff.position);
   }
 })
