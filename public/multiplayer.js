@@ -11,7 +11,7 @@ socket.on("player update", (stuff) =>{
   if(stuff.id != playerId && !(stuff.id in players)) {
     let newPlayer = document.createElement("a-sphere");
     newPlayer.setAttribute("color", "green")
-    
+    newPlayer.setAttribute("static-body", "shape", "sphere")
     players[stuff.id] = newPlayer;
     scene.appendChild(newPlayer);
   } else if(stuff.id in players) {
