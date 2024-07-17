@@ -1,13 +1,10 @@
-const socket = io();
-
 AFRAME.registerComponent('player-controls', {
   init: function () {
     this.keys = {};
     this.forceAmount = 200; // Adjust this value for the desired movement speed
     this.canJump = false; // To track if the player can jump
     this.touchingGround = false; // To track if the player is touching the ground
-    this.el.id = 'player'; // Ensure player ID is unique
-    this.playerId = socket.id; // Store player ID
+    this.el.id = 'player'; // Ensure player ID is unique 
 
     this.el.addEventListener('body-loaded', () => {
       const el = this.el;
@@ -101,6 +98,4 @@ AFRAME.registerComponent('player-controls', {
 document.addEventListener("click", ()=>{
   socket.emit("message", "hhhhh")
 })
-    //const position = document.querySelector.getAttribute('position');
-    //socket.emit('position update', { playerId: this.playerId, position });
 document.querySelector('#player').setAttribute('player-controls', '');
