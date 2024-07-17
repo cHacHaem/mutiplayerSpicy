@@ -15,18 +15,16 @@ app.use(express.static('public'));
 // Chatroom
 io.on('connection', function (socket) {
   socket.on('position update', function (data) {
+    console.log(data)
     // we tell the client to execute 'new message'
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data
-    });
+    socket.broadcast.emit('position update', data);
   });
 
   socket.on('disconnect', function () {
     // echo globally that this client has left
     socket.broadcast.emit('user left', {
       username: socket.username,
-      numUsers: numUsers
+      numUsers: "hjwegjhd"
     });
   }); // Added missing closing parenthesis and semicolon
 });

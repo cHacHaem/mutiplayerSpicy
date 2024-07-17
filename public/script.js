@@ -96,7 +96,7 @@ AFRAME.registerComponent('player-controls', {
 
     // Emit player's position to the server
     const position = el.getAttribute('position');
-    socket.emit('updatePosition', { playerId: this.playerId, position });
+    socket.emit('position update', { playerId: this.playerId, position });
   }
 });
 document.addEventListener("click", ()=>{
