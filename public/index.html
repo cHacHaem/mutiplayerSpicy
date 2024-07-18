@@ -7,6 +7,7 @@
   <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="https://github.com/c-frame/aframe-extras/tree/890ec11429572dc50a4a65c52b047144b9505e51/src/loaders#animation"></script>
   <title>Multiplayer A-Frame</title>
 </head>
 <body>
@@ -15,6 +16,7 @@
     <a-camera position="0 1.6 0" wasd-controls="enabled: false" id="cam"></a-camera>
   </a-sphere>
   <a-entity environment="preset: forest"></a-entity>
+  <a-entity gltf-model="https://cdn.glitch.global/3f364c4d-41e1-4373-9bcb-97d17ea5c54f/player_idle2.glb?v=1721343580402" animation-mixer="clip: idle"></a-entity>
   <a-box id="floor" color="green" static-body="mass: 0" position="0 -1 0" width="200" height="1" depth="200"></a-box>
 </a-scene>
 
