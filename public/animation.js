@@ -1,17 +1,29 @@
 AFRAME.registerComponent('move', {
   init: function () {
-    setTimeout( () => {
-      let position = this.el.getAttribute("position")
-   console.log(this.el.components['gltf-model'].model )
-            // Create an AnimationMixer, and get the list of AnimationClip instances
-      const mixer = new THREE.AnimationMixer( this.el.components['gltf-model'].model);
-      const clips = this.el.components['gltf-model'].model.animations[0];
-      var clock = new THREE.Clock();
-      // Play all animations
-    mixer.clipAction( clips ).play();
+    setTimeout(() => {
+      const model = this.el.components['gltf-model'].model;
+      if (!model) {
+        console.error("Model not loaded yet!");
+        return;
+      }
+      
+      this.mixer = new THREE.AnimationMixer(model);
+      const clips = model.animations;
 
-      var delta = 0.25 * clock.getDelta();
-      mixer.update( delta );
-    }, 2000)
+      // Play all animations
+      clips.forEach(clip => {
+        const action = this.mixer.clipAction("idle");
+        action.play();
+      });
+
+      this.clock = new THREE.Clock();
+    }, 2000);
+  },
+  
+  tick: function (time, timeDelta) {
+    if (this.mixer) {
+      const delta = this.clock.getDelta();
+      this.mixer.update(delta);
+    }
   }
-})
+});
