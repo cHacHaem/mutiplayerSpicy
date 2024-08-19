@@ -14,12 +14,12 @@ socket.on("player update", (stuff) =>{
      newPlayer.setAttribute("move", "jkw")
     newPlayer.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/player_idle2.glb?v=1724004739221")
     newPlayer.setAttribute("scale", "0.4 0.4 0.4")
-    newPlayer.setAttribute("position", "0 -2 0")
-    newPlayer.setAttribute("visible", "false")
+    newPlayerHitbox.setAttribute("position", "0 2 0")
+    newPlayerHitbox.setAttribute("visible", "false")
     newPlayer.setAttribute("visible", "true")
   newPlayer.setAttribute("static-body", "shape", "cylinder")
     newPlayerHitbox.setAttribute("height", "4")
-    newPlayer.appendChild(newPlayerSkin)
+    newPlayer.appendChild(newPlayerHitbox)
     players[stuff.id] = newPlayer;
     scene.appendChild(newPlayer);
   } else if(stuff.id in players) {
