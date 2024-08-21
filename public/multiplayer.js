@@ -15,7 +15,7 @@ socket.on("player update", (stuff) => {
     let newPlayer = document.createElement("a-entity");
     let newPlayerHitbox = document.createElement("a-cylinder");
 
-    newPlayer.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/player_idle2.glb?v=1724004739221");
+    newPlayer.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/runningSweatshirt.glb?v=1724262147693");
     newPlayer.setAttribute("scale", "0.4 0.4 0.4");
     newPlayer.setAttribute("visible", "true");
     newPlayer.setAttribute("move", "hfk")
