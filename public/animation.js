@@ -12,7 +12,7 @@ AFRAME.registerComponent('move', {
 
       // Play all animations
       clips.forEach(clip => {
-        const action = this.mixer.clipAction("Running");
+        const action = this.mixer.clipAction("Move");
         action.play();
       });
 
