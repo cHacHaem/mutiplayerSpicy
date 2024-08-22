@@ -5,6 +5,7 @@ let cam = document.querySelector("#cam");
 let scene = document.querySelector("a-scene");
 let players = {};
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
+let movementThreshold = 0.1; // Threshold for detecting movement
 
 function sendUpdate() {
   const position = player.getAttribute("position");
@@ -27,7 +28,6 @@ socket.on("player update", (stuff) => {
     newPlayer.setAttribute("scale", "3 3 3");
     newPlayer.setAttribute("visible", "true");
     newPlayer.setAttribute("move", "heiw");
-    // Set initial rotation based on the received data
     newPlayer.setAttribute("rotation", `0 ${stuff.rotation.y} 0`);
 
     // Set up the hitbox
@@ -40,18 +40,18 @@ socket.on("player update", (stuff) => {
     players[stuff.id] = { 
       entity: newPlayer, 
       targetPosition: stuff.position, 
-      previousPosition: { ...stuff.position }, // Deep copy the initial position
-      targetRotationY: stuff.rotation.y + 180, // Added 180 degrees
-      isMoving: false // Initialize as not moving
+      previousPosition: { ...stuff.position }, 
+      targetRotationY: stuff.rotation.y + 180, 
+      isMoving: false 
     };
 
     scene.appendChild(newPlayer);
   } else if (stuff.id in players) {
     let player = players[stuff.id];
     player.targetPosition = stuff.position;
-    player.targetRotationY = stuff.rotation.y + 180; // Added 180 degrees
+    player.targetRotationY = stuff.rotation.y + 180;
+    //make player animation models prefabs!!!!!!! this alows for quicker changing
     console.log(player.isMoving)
-    // Update model based on movement status
     if (player.isMoving) {
       player.entity.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/runningSweatshirt.glb?v=1724334083180");
     } else {
@@ -77,10 +77,10 @@ function animatePlayers() {
     player.entity.setAttribute("position", currentPosition);
     player.entity.setAttribute("rotation", currentRotation);
 
-    // Check if the player is still moving
-    if (player.previousPosition.x !== player.targetPosition.x ||
-        player.previousPosition.y !== player.targetPosition.y ||
-        player.previousPosition.z !== player.targetPosition.z) {
+    // Check if the player is still moving, with threshold
+    if (Math.abs(player.previousPosition.x - player.targetPosition.x) > movementThreshold ||
+        Math.abs(player.previousPosition.y - player.targetPosition.y) > movementThreshold ||
+        Math.abs(player.previousPosition.z - player.targetPosition.z) > movementThreshold) {
       player.isMoving = true;
     } else {
       player.isMoving = false;
