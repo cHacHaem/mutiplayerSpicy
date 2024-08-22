@@ -13,8 +13,9 @@
 <body>
 <a-scene physics="debug: true; defaultContactMaterial: {friction: 0.1, restitution: 0.3}">
   <a-sphere id="player" position="0 5 0" visible="false">
-    <a-camera position="0 3 0" wasd-controls="enabled: false" id="cam"></a-camera>
+    <a-camera position="0 2.5 0" wasd-controls="enabled: false" id="cam"></a-camera>
   </a-sphere>
+  <a-box dynamic-body constraint="target: #player;" position="0 7 0" id="body"></a-box>
   <a-entity environment="preset: forest"></a-entity>
   <a-box id="floor" color="green" static-body="mass: 0" position="0 -1 0" width="200" height="1" depth="200"></a-box>
 </a-scene>

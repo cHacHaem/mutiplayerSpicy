@@ -16,14 +16,14 @@ socket.on("player update", (stuff) => {
     let newPlayerHitbox = document.createElement("a-cylinder");
 
     newPlayer.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/runningSweatshirt.glb?v=1724334083180");
-    newPlayer.setAttribute("scale", "0.4 0.4 0.4");
+    newPlayer.setAttribute("scale", "3 3 3");
     newPlayer.setAttribute("visible", "true");
     newPlayer.setAttribute("move", "hfk")
     newPlayer.setAttribute("rotation", "0 -90 0")
     newPlayerHitbox.setAttribute("static-body", "shape", "cylinder");
     newPlayerHitbox.setAttribute("visible", "false");
-    newPlayerHitbox.setAttribute("position", "0 5.25 0");
-    newPlayerHitbox.setAttribute("height", "4");
+    newPlayerHitbox.setAttribute("position", "0 0.5 0");
+    newPlayerHitbox.setAttribute("height", "3.1");
 
     newPlayer.appendChild(newPlayerHitbox);
     players[stuff.id] = { entity: newPlayer, targetPosition: stuff.position };
