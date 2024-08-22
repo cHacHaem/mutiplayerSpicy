@@ -40,13 +40,23 @@ socket.on("player update", (stuff) => {
     players[stuff.id] = { 
       entity: newPlayer, 
       targetPosition: stuff.position, 
-      targetRotationY: stuff.rotation.y 
+      previousPosition: { ...stuff.position }, // Deep copy the initial position
+      targetRotationY: stuff.rotation.y + 180, // Added 180 degrees
+      isMoving: false // Initialize as not moving
     };
 
     scene.appendChild(newPlayer);
   } else if (stuff.id in players) {
-    players[stuff.id].targetPosition = stuff.position;
-    players[stuff.id].targetRotationY = stuff.rotation.y+180;
+    let player = players[stuff.id];
+    player.targetPosition = stuff.position;
+    player.targetRotationY = stuff.rotation.y + 180; // Added 180 degrees
+    console.log(player.isMoving)
+    // Update model based on movement status
+    if (player.isMoving) {
+      player.entity.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/runningSweatshirt.glb?v=1724334083180");
+    } else {
+      player.entity.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/breathingIdleSweatshirt.glb?v=1724359581798");
+    }
   }
 });
 
@@ -66,6 +76,18 @@ function animatePlayers() {
 
     player.entity.setAttribute("position", currentPosition);
     player.entity.setAttribute("rotation", currentRotation);
+
+    // Check if the player is still moving
+    if (player.previousPosition.x !== player.targetPosition.x ||
+        player.previousPosition.y !== player.targetPosition.y ||
+        player.previousPosition.z !== player.targetPosition.z) {
+      player.isMoving = true;
+    } else {
+      player.isMoving = false;
+    }
+
+    // Update the previous position for the next frame
+    player.previousPosition = { ...player.targetPosition };
   });
   requestAnimationFrame(animatePlayers);
 }
