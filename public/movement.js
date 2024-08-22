@@ -42,17 +42,6 @@ AFRAME.registerComponent('player-controls', {
     });
 
     // Listen for other players' movements
-    socket.on('playerMoved', (data) => {
-      let otherPlayer = document.getElementById(data.playerId);
-      if (!otherPlayer) {
-        otherPlayer = document.createElement('a-sphere');
-        otherPlayer.setAttribute('dynamic-body', '');
-        otherPlayer.setAttribute('position', '0 5 0');
-        otherPlayer.id = data.playerId;
-        document.querySelector('a-scene').appendChild(otherPlayer);
-      }
-      otherPlayer.setAttribute('position', data.position);
-    });
   },
 
   tick: function () {
@@ -91,11 +80,6 @@ AFRAME.registerComponent('player-controls', {
       el.body.applyForce(force, el.body.position);
     }
 
-    // Emit player's position to the server
-
   }
 });
-document.addEventListener("click", ()=>{
-  socket.emit("message", "hhhhh")
-})
 document.querySelector('#player').setAttribute('player-controls', '');
