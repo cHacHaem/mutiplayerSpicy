@@ -73,7 +73,7 @@ function animatePlayers() {
     player.entity.setAttribute("rotation", currentRotation);
 
     // Check if the player is still moving, with threshold
-    console.log(Math.abs(player.previousPosition.y - player.targetPosition.y))
+    console.log(Math.abs(player.previousPosition.z - player.targetPosition.z))
     if (Math.abs(player.previousPosition.x - player.targetPosition.x) > movementThreshold ||
         Math.abs(player.previousPosition.y - player.targetPosition.y) > movementThreshold ||
         Math.abs(player.previousPosition.z - player.targetPosition.z) > movementThreshold) {
