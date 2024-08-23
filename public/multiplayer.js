@@ -5,7 +5,7 @@ let cam = document.querySelector("#cam");
 let scene = document.querySelector("a-scene");
 let players = {};
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
-let movementThreshold = 0.1; // Threshold for detecting movement
+let movementThreshold = 0.01; // Threshold for detecting movement
 
 function sendUpdate() {
   const position = player.getAttribute("position");
@@ -51,12 +51,7 @@ socket.on("player update", (stuff) => {
     player.targetPosition = stuff.position;
     player.targetRotationY = stuff.rotation.y + 180;
     //make player animation models prefabs!!!!!!! this alows for quicker changing
-    console.log(player.isMoving)
-    if (player.isMoving) {
-      player.entity.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/runningSweatshirt.glb?v=1724334083180");
-    } else {
-      player.entity.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/breathingIdleSweatshirt.glb?v=1724359581798");
-    }
+  
   }
 });
 
@@ -78,6 +73,7 @@ function animatePlayers() {
     player.entity.setAttribute("rotation", currentRotation);
 
     // Check if the player is still moving, with threshold
+    console.log(Math.abs(player.previousPosition.y - player.targetPosition.y))
     if (Math.abs(player.previousPosition.x - player.targetPosition.x) > movementThreshold ||
         Math.abs(player.previousPosition.y - player.targetPosition.y) > movementThreshold ||
         Math.abs(player.previousPosition.z - player.targetPosition.z) > movementThreshold) {
@@ -85,7 +81,12 @@ function animatePlayers() {
     } else {
       player.isMoving = false;
     }
-
+  console.log(player.isMoving)
+    if (player.isMoving) {
+      player.entity.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/runningSweatshirt.glb?v=1724334083180");
+    } else {
+      player.entity.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/breathingIdleSweatshirt.glb?v=1724359581798");
+    }
     // Update the previous position for the next frame
     player.previousPosition = { ...player.targetPosition };
   });
