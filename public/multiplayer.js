@@ -79,7 +79,7 @@ function animatePlayers() {
         Math.abs(player.previousPosition.z - player.targetPosition.z) > movementThreshold) {
       player.isMoving = true;
     } else {
-      player.isMoving = false;
+      player.isMoving = true;
     }
   console.log(player.isMoving)
     if (player.isMoving) {
