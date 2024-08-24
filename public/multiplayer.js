@@ -79,11 +79,11 @@ function animatePlayers() {
         Math.abs(player.previousPosition.z - player.targetPosition.z) > movementThreshold) {
       player.isMoving = true;
     } else {
-      player.isMoving = true;
+      player.isMoving = false;
     }
   console.log(player.isMoving)
     if (player.isMoving) {
-      player.entity.setAttribute("gltf-model", "#idleSweater");
+      player.entity.setAttribute("gltf-model", "#runningSweater");
     } else {
       player.entity.setAttribute("gltf-model", "#idleSweater");
     }
