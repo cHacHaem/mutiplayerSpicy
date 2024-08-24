@@ -42,7 +42,8 @@ socket.on("player update", (stuff) => {
       targetPosition: stuff.position, 
       previousPosition: { ...stuff.position }, 
       targetRotationY: stuff.rotation.y + 180, 
-      isMoving: false 
+      isMoving: false,
+      isMovingSet: true
     };
 
     scene.appendChild(newPlayer);
@@ -82,10 +83,12 @@ function animatePlayers() {
       player.isMoving = false;
     }
   console.log(player.isMoving)
-    if (player.isMoving) {
+    if (player.isMoving && !player.isMovingSet) {
       player.entity.setAttribute("gltf-model", "#runningSweater");
-    } else {
+      player.isMovingSet = true;
+    } else if(player.isMovingSet && !player.isMoving) {
       player.entity.setAttribute("gltf-model", "#idleSweater");
+      player.isMovingSet = false;
     }
     // Update the previous position for the next frame
     player.previousPosition = { ...player.targetPosition };
