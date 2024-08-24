@@ -43,7 +43,6 @@ socket.on("player update", (stuff) => {
       previousPosition: { ...stuff.position }, 
       targetRotationY: stuff.rotation.y + 180, 
       isMoving: false,
-      isMovingSet: true
     };
 
     scene.appendChild(newPlayer);
@@ -51,8 +50,6 @@ socket.on("player update", (stuff) => {
     let player = players[stuff.id];
     player.targetPosition = stuff.position;
     player.targetRotationY = stuff.rotation.y + 180;
-    //make player animation models prefabs!!!!!!! this alows for quicker changing
-  
   }
 });
 
@@ -74,22 +71,20 @@ function animatePlayers() {
     player.entity.setAttribute("rotation", currentRotation);
 
     // Check if the player is still moving, with threshold
-    console.log(Math.abs(player.previousPosition.z - player.targetPosition.z))
-    if (Math.abs(player.previousPosition.x - player.targetPosition.x) > movementThreshold ||
-        Math.abs(player.previousPosition.y - player.targetPosition.y) > movementThreshold ||
-        Math.abs(player.previousPosition.z - player.targetPosition.z) > movementThreshold) {
-      player.isMoving = true;
-    } else {
-      player.isMoving = false;
+    let wasMoving = player.isMoving;
+    player.isMoving = Math.abs(player.previousPosition.x - player.targetPosition.x) > movementThreshold ||
+                      Math.abs(player.previousPosition.y - player.targetPosition.y) > movementThreshold ||
+                      Math.abs(player.previousPosition.z - player.targetPosition.z) > movementThreshold;
+
+    // Change model only if movement state has changed
+    if (player.isMoving !== wasMoving) {
+      if (player.isMoving) {
+        player.entity.setAttribute("gltf-model", "#runningSweater");
+      } else {
+        player.entity.setAttribute("gltf-model", "#idleSweater");
+      }
     }
-  console.log(player.isMoving)
-    if (player.isMoving && !player.isMovingSet) {
-      player.entity.setAttribute("gltf-model", "#runningSweater");
-      player.isMovingSet = true;
-    } else if(player.isMovingSet && !player.isMoving) {
-      player.entity.setAttribute("gltf-model", "#idleSweater");
-      player.isMovingSet = false;
-    }
+
     // Update the previous position for the next frame
     player.previousPosition = { ...player.targetPosition };
   });
