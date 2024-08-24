@@ -5,7 +5,7 @@ let cam = document.querySelector("#cam");
 let scene = document.querySelector("a-scene");
 let players = {};
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
-let movementThreshold = 0; // Threshold for detecting movement
+let movementThreshold = 0.01; // Threshold for detecting movement
 
 function sendUpdate() {
   const position = player.getAttribute("position");
@@ -24,7 +24,7 @@ socket.on("player update", (stuff) => {
     let newPlayer = document.createElement("a-entity");
     let newPlayerHitbox = document.createElement("a-cylinder");
 
-    newPlayer.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/runningSweatshirt.glb?v=1724334083180");
+    newPlayer.setAttribute("gltf-model", "#idleSweater");
     newPlayer.setAttribute("scale", "3 3 3");
     newPlayer.setAttribute("visible", "true");
     newPlayer.setAttribute("move", "heiw");
@@ -83,9 +83,9 @@ function animatePlayers() {
     }
   console.log(player.isMoving)
     if (player.isMoving) {
-      player.entity.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/runningSweatshirt.glb?v=1724334083180");
+      player.entity.setAttribute("gltf-model", "#idleSweater");
     } else {
-      player.entity.setAttribute("gltf-model", "https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/breathingIdleSweatshirt.glb?v=1724359581798");
+      player.entity.setAttribute("gltf-model", "#idleSweater");
     }
     // Update the previous position for the next frame
     player.previousPosition = { ...player.targetPosition };
