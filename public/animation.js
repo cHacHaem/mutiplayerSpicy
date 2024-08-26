@@ -7,6 +7,7 @@ AFRAME.registerComponent('move', {
     if (oldData['gltf-model'] !== this.el.getAttribute('gltf-model')) {
       // The model has changed, so set up the animation again
       this.setupModel();
+      console.log("new animation")
     }
   },
 
