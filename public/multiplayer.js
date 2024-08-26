@@ -5,7 +5,7 @@ let cam = document.querySelector("#cam");
 let scene = document.querySelector("a-scene");
 let players = {};
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
-let movementThreshold = 0.01; // Threshold for detecting movement
+let movementThreshold = 0.0; // Threshold for detecting movement
 
 function sendUpdate() {
   const position = player.getAttribute("position");
@@ -79,8 +79,10 @@ function animatePlayers() {
     // Change model only if movement state has changed
     if (player.isMoving !== wasMoving) {
       if (player.isMoving) {
+        console.log("changed to running")
         player.entity.setAttribute("gltf-model", "#runningSweater");
       } else {
+        console.log("changed to idle")
         player.entity.setAttribute("gltf-model", "#idleSweater");
       }
     }
