@@ -6,6 +6,7 @@ let scene = document.querySelector("a-scene");
 let players = {};
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
 let movementThreshold = 0.01; // Threshold for detecting movement
+let animationCooldown = 200; // 1 second cooldown to change animation
 
 function sendUpdate() {
   const position = player.getAttribute("position");
@@ -41,8 +42,10 @@ socket.on("player update", (stuff) => {
       entity: newPlayer, 
       targetPosition: stuff.position, 
       previousPosition: { ...stuff.position }, 
+      previousTime: Date.now(),
       targetRotationY: stuff.rotation.y + 180, 
       isMoving: false,
+      lastAnimationChange: Date.now(), // Store the time of the last animation change
     };
 
     scene.appendChild(newPlayer);
@@ -70,21 +73,30 @@ function animatePlayers() {
     player.entity.setAttribute("position", currentPosition);
     player.entity.setAttribute("rotation", currentRotation);
 
-    // Check if the player is still moving, with threshold
+    // Calculate velocity and determine if player is moving
+    let currentTime = Date.now();
+    let timeElapsed = (currentTime - player.previousTime) / 1000; // Convert milliseconds to seconds
+    let velocity = {
+      x: (player.targetPosition.x - player.previousPosition.x) / timeElapsed,
+      y: (player.targetPosition.y - player.previousPosition.y) / timeElapsed,
+      z: (player.targetPosition.z - player.previousPosition.z) / timeElapsed
+    };
+    
+    let speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2);
     let wasMoving = player.isMoving;
-    player.isMoving = Math.abs(player.previousPosition.x - player.targetPosition.x) > movementThreshold ||
-                      Math.abs(player.previousPosition.y - player.targetPosition.y) > movementThreshold ||
-                      Math.abs(player.previousPosition.z - player.targetPosition.z) > movementThreshold;
+    player.isMoving = speed > movementThreshold;
+    player.previousTime = currentTime;
 
-    // Change model only if movement state has changed
-    if (player.isMoving !== wasMoving) {
+    // Change model only if movement state has changed and cooldown has passed
+    if (player.isMoving !== wasMoving && (currentTime - player.lastAnimationChange) > animationCooldown) {
       if (player.isMoving) {
-        console.log("changed to running")
-        player.entity.setAttribute("gltf-model", "#runningSweater");
-      } else {
-        console.log("changed to idle")
+        console.log("changed to running");
         player.entity.setAttribute("gltf-model", "#idleSweater");
+      } else {
+        console.log("changed to idle");
+        player.entity.setAttribute("gltf-model", "#runningSweater");
       }
+      player.lastAnimationChange = currentTime; // Update the last animation change time
     }
 
     // Update the previous position for the next frame
