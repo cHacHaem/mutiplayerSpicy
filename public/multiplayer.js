@@ -11,7 +11,7 @@ let animationCooldown = 200; // 1 second cooldown to change animation
 function sendUpdate() {
   const position = player.getAttribute("position");
   const rotation = cam.getAttribute("rotation");
-  
+  console.log(player.body.velocity)
   socket.emit("player update", { 
     id: playerId, 
     position: position, 
