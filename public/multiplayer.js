@@ -7,15 +7,22 @@ let players = {};
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
 let movementThreshold = 0.01; // Threshold for detecting movement
 let animationCooldown = 200; // 1 second cooldown to change animation
-
+document.addEventListener("keydown", (evt)=>{
+  
+})
 function sendUpdate() {
   const position = player.getAttribute("position");
   const rotation = cam.getAttribute("rotation");
-  console.log(player.body.velocity)
+  let running = false
+  if(Math.abs(player.body.velocity.x) > 3 || Math.abs(player.body.velocity.z) > 3) {
+    console.log("running")
+    running = true;
+  }
   socket.emit("player update", { 
     id: playerId, 
     position: position, 
-    rotation: rotation 
+    rotation: rotation,
+    running: running
   });
 }
 setInterval(sendUpdate, 60);
