@@ -41,13 +41,13 @@ function sendUpdate() {
   if (velocityMagnitude > 2) {  // Assuming 2 is the threshold for 'running'
     if (angle < 30) {  // Running forward (within a 30-degree cone in front)
       movementState = 'running_forward';
+    } else if (angle > 150) {  // Running backward
+      movementState = 'running_back';
     } else if (velocityDir.x * forwardVector.z - velocityDir.z * forwardVector.x > 0) {
       movementState = 'running_left';  
-    } else if(velocityDir.x * forwardVector.z - velocityDir.z * forwardVector.x < 0) {
+    } else if (velocityDir.x * forwardVector.z - velocityDir.z * forwardVector.x < 0) {
       movementState = 'running_right';  
-    } else {
-      movementState = "running_back"
-    }
+    } 
   } else if (velocityMagnitude > 0.1) {
     // Add walking or other states if needed, based on lower velocity thresholds
     movementState = 'walking';
@@ -62,7 +62,6 @@ function sendUpdate() {
 }
 
 setInterval(sendUpdate, 60);
-
 
 socket.on("player update", (stuff) => {
   if (stuff.id !== playerId && !(stuff.id in players)) {
@@ -87,8 +86,8 @@ socket.on("player update", (stuff) => {
       targetPosition: stuff.position, 
       previousPosition: { ...stuff.position }, 
       targetRotationY: stuff.rotation.y + 180, 
-      isMoving: stuff.running, // Set initial movement state based on running
-      currentModel: "#idleSweater" // Keep track of the current model
+      currentModel: "#idleSweater", // Keep track of the current model
+      movementState: stuff.movementState // Set initial movement state
     };
 
     scene.appendChild(newPlayer);
@@ -97,23 +96,35 @@ socket.on("player update", (stuff) => {
     player.targetPosition = stuff.position;
     player.targetRotationY = stuff.rotation.y + 180;
 
-    // Update the running state if it has changed
-    if (player.isMoving !== stuff.running) {
-      player.isMoving = stuff.running;
-      
+    // Update the movement state if it has changed
+    if (player.movementState !== stuff.movementState) {
+      player.movementState = stuff.movementState;
+
       // Change the model only if the state has changed
-      if (player.isMoving) {
-        if (player.currentModel !== "#runningSweater") {
-          console.log("changed to running");
-          player.entity.setAttribute("gltf-model", "#runningSweater");
-          player.currentModel = "#runningSweater"; // Update current model
-        }
-      } else {
-        if (player.currentModel !== "#idleSweater") {
-          console.log("changed to idle");
-          player.entity.setAttribute("gltf-model", "#idleSweater");
-          player.currentModel = "#idleSweater"; // Update current model
-        }
+      if (player.movementState === 'running_forward' && player.currentModel !== "#runningSweater") {
+        console.log("changed to running forward");
+        player.entity.setAttribute("gltf-model", "#runningSweater");
+        player.currentModel = "#runningSweater";
+      } else if (player.movementState === 'running_left' && player.currentModel !== "#runningSweaterLeft") {
+        console.log("changed to running left");
+        player.entity.setAttribute("gltf-model", "#runningSweaterLeft");
+        player.currentModel = "#runningSweaterLeft";
+      } else if (player.movementState === 'running_right' && player.currentModel !== "#runningSweaterRight") {
+        console.log("changed to running right");
+        player.entity.setAttribute("gltf-model", "#runningSweaterRight");
+        player.currentModel = "#runningSweaterRight";
+      } else if (player.movementState === 'running_back' && player.currentModel !== "#runningSweaterBack") {
+        console.log("changed to running back");
+        player.entity.setAttribute("gltf-model", "#runningSweaterBack");
+        player.currentModel = "#runningSweaterBack";
+      } else if (player.movementState === 'walking' && player.currentModel !== "#walkingSweater") {
+        console.log("changed to walking");
+        player.entity.setAttribute("gltf-model", "#walkingSweater");
+        player.currentModel = "#walkingSweater";
+      } else if (player.movementState === 'idle' && player.currentModel !== "#idleSweater") {
+        console.log("changed to idle");
+        player.entity.setAttribute("gltf-model", "#idleSweater");
+        player.currentModel = "#idleSweater";
       }
     }
   }
