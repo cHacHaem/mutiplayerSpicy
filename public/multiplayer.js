@@ -9,21 +9,52 @@ let smoothness = 0.1; // Adjust this value to control how smooth the movement is
 function sendUpdate() {
   const position = player.getAttribute("position");
   const rotation = cam.getAttribute("rotation");
-  let running = false;
-  
-  if (Math.abs(player.body.velocity.x) > 2 || Math.abs(player.body.velocity.z) > 2) {
-    console.log("running");
-    running = true;
+  const velocity = player.body.velocity;  // Assuming you have Cannon.js or similar physics library
+  let movementState = 'idle';  // Default to 'idle'
+
+  // Calculate forward vector from camera rotation (Y-axis)
+  const rad = THREE.Math.degToRad(rotation.y);  // Convert degrees to radians
+  const forwardVector = {
+    x: -Math.sin(rad),
+    z: -Math.cos(rad)
+  };
+
+  // Calculate velocity direction (normalized)
+  const velocityMagnitude = Math.sqrt(velocity.x ** 2 + velocity.z ** 2);
+  const velocityDir = {
+    x: velocity.x / velocityMagnitude,
+    z: velocity.z / velocityMagnitude
+  };
+
+  // Calculate dot product to determine movement direction relative to the camera
+  const dotProduct = forwardVector.x * velocityDir.x + forwardVector.z * velocityDir.z;
+
+  // Calculate the angle in degrees between the forward vector and velocity direction
+  const angle = Math.acos(dotProduct) * (180 / Math.PI);  // Convert radians to degrees
+
+  // Determine running state based on angle and speed
+  if (velocityMagnitude > 2) {  // Assuming 2 is the threshold for 'running'
+    if (angle < 30) {  // Running forward (within a 30-degree cone in front)
+      movementState = 'running_forward';
+    } else if (velocityDir.x * forwardVector.z - velocityDir.z * forwardVector.x > 0) {
+      movementState = 'running_right';  // Running right
+    } else {
+      movementState = 'running_left';  // Running left
+    }
+  } else if (velocityMagnitude > 0.1) {
+    // Add walking or other states if needed, based on lower velocity thresholds
+    movementState = 'walking';
   }
-  
+
   socket.emit("player update", { 
     id: playerId, 
     position: position, 
     rotation: rotation,
-    running: running
+    movementState: movementState  // Send the determined movement state
   });
 }
 setInterval(sendUpdate, 60);
+
 
 socket.on("player update", (stuff) => {
   if (stuff.id !== playerId && !(stuff.id in players)) {
