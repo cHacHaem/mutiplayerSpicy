@@ -12,8 +12,13 @@ function sendUpdate() {
   const velocity = player.body.velocity;  // Assuming you have Cannon.js or similar physics library
   let movementState = 'idle';  // Default to 'idle'
 
+  // Convert degrees to radians manually
+  function degToRad(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+
   // Calculate forward vector from camera rotation (Y-axis)
-  const rad = THREE.Math.degToRad(rotation.y);  // Convert degrees to radians
+  const rad = degToRad(rotation.y);
   const forwardVector = {
     x: -Math.sin(rad),
     z: -Math.cos(rad)
@@ -37,9 +42,11 @@ function sendUpdate() {
     if (angle < 30) {  // Running forward (within a 30-degree cone in front)
       movementState = 'running_forward';
     } else if (velocityDir.x * forwardVector.z - velocityDir.z * forwardVector.x > 0) {
-      movementState = 'running_right';  // Running right
+      movementState = 'running_left';  
+    } else if(velocityDir.x * forwardVector.z - velocityDir.z * forwardVector.x < 0) {
+      movementState = 'running_right';  
     } else {
-      movementState = 'running_left';  // Running left
+      movementState = "running_back"
     }
   } else if (velocityMagnitude > 0.1) {
     // Add walking or other states if needed, based on lower velocity thresholds
@@ -53,6 +60,7 @@ function sendUpdate() {
     movementState: movementState  // Send the determined movement state
   });
 }
+
 setInterval(sendUpdate, 60);
 
 
