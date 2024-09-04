@@ -37,8 +37,12 @@ function sendUpdate() {
   // Calculate the angle in degrees between the forward vector and velocity direction
   const angle = Math.acos(dotProduct) * (180 / Math.PI);  // Convert radians to degrees
 
-  // Determine running state based on angle and speed
-  if (velocityMagnitude > 2) {  // Assuming 2 is the threshold for 'running'
+  // Detect if the player is in the air (jumping or falling)
+  const isJumping = Math.abs(velocity.y) > 0.1;  // Set a threshold to detect jump
+  console.log(velocity.y)
+  if (isJumping) {
+    movementState = 'jumping';
+  } else if (velocityMagnitude > 2) {  // Assuming 2 is the threshold for 'running'
     if (angle < 30) {  // Running forward (within a 30-degree cone in front)
       movementState = 'running_forward';
     } else if (angle > 150) {  // Running backward
@@ -47,9 +51,8 @@ function sendUpdate() {
       movementState = 'running_left';  
     } else if (velocityDir.x * forwardVector.z - velocityDir.z * forwardVector.x < 0) {
       movementState = 'running_right';  
-    } 
+    }
   } else if (velocityMagnitude > 0.1) {
-    // Add walking or other states if needed, based on lower velocity thresholds
     movementState = 'walking';
   }
 
@@ -60,6 +63,7 @@ function sendUpdate() {
     movementState: movementState  // Send the determined movement state
   });
 }
+
 
 setInterval(sendUpdate, 60);
 
@@ -101,7 +105,11 @@ socket.on("player update", (stuff) => {
       player.movementState = stuff.movementState;
 
       // Change the model only if the state has changed
-      if (player.movementState === 'running_forward' && player.currentModel !== "#runningSweater") {
+      if (player.movementState === 'jumping' && player.currentModel !== "#jumpingSweater") {
+        console.log("changed to jumping");
+        player.entity.setAttribute("gltf-model", "#jumpingSweater");
+        player.currentModel = "#jumpingSweater";
+      } else if (player.movementState === 'running_forward' && player.currentModel !== "#runningSweater") {
         console.log("changed to running forward");
         player.entity.setAttribute("gltf-model", "#runningSweater");
         player.currentModel = "#runningSweater";
@@ -129,6 +137,7 @@ socket.on("player update", (stuff) => {
     }
   }
 });
+
 
 function animatePlayers() {
   Object.keys(players).forEach((id) => {
