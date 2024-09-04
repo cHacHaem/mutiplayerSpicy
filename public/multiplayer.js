@@ -40,6 +40,7 @@ function sendUpdate() {
   // Detect if the player is in the air (jumping or falling)
   const isJumping = Math.abs(velocity.y) > 0.1;  // Set a threshold to detect jump
   console.log(velocity.y)
+  console.log(player.getAttribute("postion"))
   if (isJumping) {
     movementState = 'jumping';
   } else if (velocityMagnitude > 2) {  // Assuming 2 is the threshold for 'running'
