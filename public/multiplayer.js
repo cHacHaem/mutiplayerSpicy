@@ -72,10 +72,10 @@ socket.on("player update", (stuff) => {
     let newPlayer = document.createElement("a-entity");
     let newPlayerHitbox = document.createElement("a-cylinder");
 
-    newPlayer.setAttribute("gltf-model", "#idleSweater");
+    newPlayer.setAttribute("gltf-model", "#playerSkin");
     newPlayer.setAttribute("scale", "3 3 3");
     newPlayer.setAttribute("visible", "true");
-    newPlayer.setAttribute("move", "heiw");
+    newPlayer.setAttribute("move", "clip: Idle");
     newPlayer.setAttribute("rotation", `0 ${stuff.rotation.y} 0`);
 
     // Set up the hitbox
