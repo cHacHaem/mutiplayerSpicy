@@ -25,6 +25,9 @@ io.on("connection", function (socket) {
     console.log(data)
     chat[data.time] = data.message
     fs.writeFileSync('chat.json', JSON.stringify(chat, null, 2));
+    const data2 = fs.readFileSync('chat.json');
+  chat = JSON.parse(data2) || {};
+    console.log(chat)
     socket.broadcast.emit("chat message", chat)
   })
   socket.on("player update", function (data) {
