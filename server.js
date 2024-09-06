@@ -14,6 +14,9 @@ app.use(express.static("public"));
 
 // Chatroom
 io.on("connection", function (socket) {
+  socket.on("chat message", function (data) {
+    
+  })
   socket.on("player update", function (data) {
     console.log(data);
     // we tell the client to execute 'new message'
