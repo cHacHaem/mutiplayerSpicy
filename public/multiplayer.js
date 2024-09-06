@@ -106,25 +106,25 @@ socket.on("player update", (stuff) => {
 
       // Change the model only if the state has changed
       if (player.movementState === 'jumping' && player.currentModel !== "#jumpingSweater") {
-        player.entity.setAttribute("gltf-model", "#jumpingSweater");
+        player.entity.setAttribute("move", "clip: Jumping");
         player.currentModel = "#jumpingSweater";
       } else if (player.movementState === 'running_forward' && player.currentModel !== "#runningSweater") {
-        player.entity.setAttribute("gltf-model", "#runningSweater");
+        player.entity.setAttribute("move", "clip: Running");
         player.currentModel = "#runningSweater";
       } else if (player.movementState === 'running_left' && player.currentModel !== "#runningSweaterLeft") {
-         player.entity.setAttribute("gltf-model", "#runningSweaterLeft");
+         player.entity.setAttribute("move", "clip: LeftRun");
         player.currentModel = "#runningSweaterLeft";
       } else if (player.movementState === 'running_right' && player.currentModel !== "#runningSweaterRight") {
-        player.entity.setAttribute("gltf-model", "#runningSweaterRight");
+        player.entity.setAttribute("move", "clip: RightRun");
         player.currentModel = "#runningSweaterRight";
       } else if (player.movementState === 'running_back' && player.currentModel !== "#runningSweaterBack") {
-        player.entity.setAttribute("gltf-model", "#runningSweaterBack");
+        player.entity.setAttribute("move", "clip: Idle");
         player.currentModel = "#runningSweaterBack";
       } else if (player.movementState === 'walking' && player.currentModel !== "#walkingSweater") {
-        player.entity.setAttribute("gltf-model", "#walkingSweater");
+        player.entity.setAttribute("move", "clip: Idle");
         player.currentModel = "#walkingSweater";
       } else if (player.movementState === 'idle' && player.currentModel !== "#idleSweater") {
-        player.entity.setAttribute("gltf-model", "#idleSweater");
+        player.entity.setAttribute("move", "clip: Idle");
         player.currentModel = "#idleSweater";
       }
     }
