@@ -12,11 +12,6 @@
   <style src="/style.css"></style>
 </head>
 <body>
-  <div class="overlay">
-    <h1>
-      Hello
-    </h1>
-  </div>
 <a-scene physics="debug: false; defaultContactMaterial: {friction: 0.1, restitution: 0.3}">
   <a-assets>
     <a-asset-item id="runningSweater" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/runningSweatshirt.glb?v=1724509364275"></a-asset-item>
@@ -34,6 +29,15 @@
   <a-entity environment="preset: forest"></a-entity>
   <a-box id="floor" color="green" static-body="mass: 0" position="0 -1 0" width="200" height="1" depth="200"></a-box>
 </a-scene>
+  <div class="overlay">
+        <h2>Chat Window</h2>
+        <div id="chat-content">
+            <!-- Chat messages will appear here -->
+        </div>
+        <input type="text" id="chat-input" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+  </div>
+
 
 <script src="/movement.js"></script>
   <script src="/multiplayer.js"></script>
