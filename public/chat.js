@@ -1,2 +1,4 @@
-//let message = prompt("message")
-//socket.emit("chat message", {message: message, time: Date.now()})
+let chatInput = document.getElementById("chat-input")
+function sendMessage() {
+ socket.emit("chat message", {message: chatInput.value, time: Date.now(), id: playerId}) 
+}

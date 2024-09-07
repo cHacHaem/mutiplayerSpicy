@@ -7,33 +7,94 @@
   <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="https://github.com/c-frame/aframe-extras/tree/890ec11429572dc50a4a65c52b047144b9505e51/src/loaders#animation"></script>
   <title>Multiplayer A-Frame</title>
-  <style src="/style.css"></style>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    a-scene {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1; /* Scene will be behind the overlay */
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: calc(100% - 20px);
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      color: white;
+      padding: 10px;
+      z-index: 2; /* Place the overlay above the scene */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    #chat-content {
+      flex: 1; /* Take available vertical space */
+      overflow-y: auto;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    #chat-input-container {
+      display: flex;
+      align-items: center;
+    }
+
+    #chat-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-left: 10px;
+    }
+
+    button {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #ff5722;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-<a-scene physics="debug: false; defaultContactMaterial: {friction: 0.1, restitution: 0.3}">
-  <a-assets>
-    <a-asset-item id="playerSkin" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/Sweatshirt.glb?v=1725725228968"></a-asset-item>
-  </a-assets>
-  <a-sphere id="player" position="0 5 0" visible="false">
-    <a-camera position="0 2.5 0" wasd-controls="enabled: false" id="cam"></a-camera>
-  </a-sphere>
-  <a-entity environment="preset: forest"></a-entity>
-  <a-box id="floor" color="green" static-body="mass: 0" position="0 -1 0" width="200" height="1" depth="200"></a-box>
-</a-scene>
+  <a-scene physics="debug: false; defaultContactMaterial: {friction: 0.1, restitution: 0.3}">
+    <a-assets>
+      <a-asset-item id="playerSkin" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/Sweatshirt.glb?v=1725725228968"></a-asset-item>
+    </a-assets>
+    <a-sphere id="player" position="0 5 0" visible="false">
+      <a-camera position="0 2.5 0" wasd-controls="enabled: false" id="cam"></a-camera>
+    </a-sphere>
+    <a-entity environment="preset: forest"></a-entity>
+    <a-box id="floor" color="green" static-body="mass: 0" position="0 -1 0" width="200" height="1" depth="200"></a-box>
+  </a-scene>
+
   <div class="overlay">
-        <h2>Chat Window</h2>
-        <div id="chat-content">
-            <!-- Chat messages will appear here -->
-        </div>
-        <input type="text" id="chat-input" placeholder="Type a message...">
-        <button onclick="sendMessage()">Send</button>
+    <div id="chat-content">
+      <!-- Chat messages will appear here -->
+    </div>
+    <div id="chat-input-container">
+      <button onclick="sendMessage()">Send</button>
+      <input type="text" id="chat-input" placeholder="Type a message...">
+    </div>
   </div>
-
-
-<script src="/movement.js"></script>
-  <script src="/multiplayer.js"></script>
+   <script src="/multiplayer.js"></script>
+  <script src="/movement.js"></script>
   <script src="/animation.js"></script>
   <script src="/spawn.js"></script>
   <script src="/chat.js"></script>

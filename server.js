@@ -23,7 +23,7 @@ app.use(express.static("public"));
 io.on("connection", function (socket) {
   socket.on("chat message", function (data) {
     console.log(data)
-    chat[data.time] = data.message
+    chat[data.time] = {message: data.message, id: data.id}
     fs.writeFileSync('chat.json', JSON.stringify(chat, null, 2));
     const data2 = fs.readFileSync('chat.json');
   chat = JSON.parse(data2) || {};
