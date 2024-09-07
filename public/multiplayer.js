@@ -5,8 +5,6 @@ let cam = document.querySelector("#cam");
 let scene = document.querySelector("a-scene");
 let players = {};
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
-let message = prompt("message")
-socket.emit("chat message", {message: message, time: Date.now()})
 function sendUpdate() {
   const position = player.getAttribute("position");
   const rotation = cam.getAttribute("rotation");

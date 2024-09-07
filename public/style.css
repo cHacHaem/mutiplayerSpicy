@@ -1,0 +1,8 @@
+.overlay {
+ z-index: 9999;
+}
+.window {
+  top: calc(50% - 300px);
+  left: calc(50% - 50px);
+  color: blue
+}
