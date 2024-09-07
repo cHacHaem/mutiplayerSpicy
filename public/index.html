@@ -82,7 +82,7 @@
     <a-sphere id="player" position="0 5 0" visible="false">
       <a-camera position="0 2.5 0" wasd-controls="enabled: false" id="cam"></a-camera>
     </a-sphere>
-    <a-entity gltf-model="#city" static-body="shape:hull"></a-entity>
+    <a-entity gltf-model="#city" cannon-physics="mass: 1"></a-entity>
     <a-box id="floor" color="green" static-body="mass: 0" position="0 -1 0" width="200" height="1" depth="200"></a-box>
   </a-scene>
 
@@ -100,5 +100,6 @@
   <script src="/animation.js"></script>
   <script src="/spawn.js"></script>
   <script src="/chat.js"></script>
+  <script src="/model.js"></script>
 </body>
 </html>
