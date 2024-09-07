@@ -116,7 +116,7 @@ socket.on("player update", (stuff) => {
         player.entity.setAttribute("move", "clip: RightRun");
         player.currentModel = "#runningSweaterRight";
       } else if (player.movementState === 'running_back' && player.currentModel !== "#runningSweaterBack") {
-        player.entity.setAttribute("move", "clip: Idle");
+        player.entity.setAttribute("move", "clip: BackRun");
         player.currentModel = "#runningSweaterBack";
       } else if (player.movementState === 'walking' && player.currentModel !== "#walkingSweater") {
         player.entity.setAttribute("move", "clip: Idle");
