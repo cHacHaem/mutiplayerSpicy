@@ -9,7 +9,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "socket.io": "^2.5.1",
-    "fs": "^0.0.2",
+    "fs": "^0.0.2"
   },
   "engines": {
     "node": "14.x"
