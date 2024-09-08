@@ -37,6 +37,7 @@ AFRAME.registerComponent('cannon-physics', {
 
           // Extract vertices from BufferGeometry
           const positions = geometry.attributes.position.array;
+          console.log(positions)
           for (let i = 0; i < positions.length; i += 3) {
             vertices.push(new CANNON.Vec3(
               positions[i],
@@ -53,7 +54,7 @@ AFRAME.registerComponent('cannon-physics', {
               geometry.index.array[i + 2]
             ]);
           }
-
+          console.log(vertices, faces)
           // Create Cannon.js shape
           let shape = new CANNON.ConvexPolyhedron(vertices, faces);
 
@@ -65,7 +66,7 @@ AFRAME.registerComponent('cannon-physics', {
 
           // Add the body to the physics world
           world.addBody(this.body);
-
+          
           // Sync position and rotation
           this.body.position.copy(el.object3D.position);
           this.body.quaternion.copy(el.object3D.quaternion);
