@@ -76,14 +76,12 @@
   <a-scene physics="debug: true; defaultContactMaterial: {friction: 0.1, restitution: 0.3}">
     <a-assets>
       <a-asset-item id="playerSkin" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/Sweatshirt.glb?v=1725725228968"></a-asset-item>
-  <a-asset-item id="city" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/cityTest2.glb?v=1725798687224"></a-asset-item>
-  
-    </a-assets>
+  </a-assets>
     <a-sphere id="player" position="0 5 0" visible="false">
       <a-camera position="0 2.5 0" wasd-controls="enabled: false" id="cam"></a-camera>
     </a-sphere>
-   
     <a-box id="floor" color="green" static-body="mass: 0" position="0 -1 0" width="200" height="1" depth="200"></a-box>
+    <a-box></a-box>
   </a-scene>
 
   <div class="overlay">
