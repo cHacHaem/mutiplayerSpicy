@@ -76,14 +76,18 @@
   <a-scene physics="debug: true; defaultContactMaterial: {friction: 0.1, restitution: 0.3}">
     <a-assets>
       <a-asset-item id="playerSkin" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/Sweatshirt.glb?v=1725725228968"></a-asset-item>
-  <img id="ground" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/ground.001.png?v=1725831593424">
+  <a-asset-item id="tree" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/tree.glb?v=1725820185520"></a-asset-item>
+<a-asset-item id="rock" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/rock.glb?v=1725830236499"></a-asset-item>
+
+      <img id="ground" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/ground.001.png?v=1725831593424">
     </a-assets>
     <a-sphere id="player" position="0 5 0" visible="false">
       <a-camera position="0 2.5 0" wasd-controls="enabled: false" id="cam"></a-camera>
     </a-sphere>
     <a-entity id="map">
-      <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -1 0" width="200" height="1" depth="200"></a-box>
-    <a-gltf-model src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/tree.glb?v=1725820185520"></a-gltf-model>
+      <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 1 0" width="200" height="1" depth="200"></a-box>
+    <a-gltf-model src="#tree"></a-gltf-model>
+      <a-gltf-model src="#rock"></a-gltf-model>
       <a-box static-body></a-box>
     </a-entity>
   </a-scene>
