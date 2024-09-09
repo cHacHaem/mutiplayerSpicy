@@ -24,11 +24,11 @@ io.on("connection", function (socket) {
   socket.on("chat message", function (data) {
     console.log(data)
     chat[data.time] = {message: data.message, id: data.id}
-    fs.writeFileSync('chat.json', JSON.stringify(chat, null, 2));
-    const data2 = fs.readFileSync('chat.json');
-  chat = JSON.parse(data2) || {};
-    console.log(chat)
-    socket.broadcast.emit("chat message", chat)
+   // fs.writeFileSync('chat.json', JSON.stringify(chat, null, 2));
+   // const data2 = fs.readFileSync('chat.json');
+  //chat = JSON.parse(data2) || {};
+    //console.log(chat)
+    socket.broadcast.emit("chat message", data)
   })
   socket.on("player update", function (data) {
     // we tell the client to execute 'new message'
