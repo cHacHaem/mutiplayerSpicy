@@ -1,5 +1,16 @@
 let chatInput = document.getElementById("chat-input")
 let chatContent = document.getElementById("chat-content")
+var params = new URLSearchParams(window.location.search);
+if (typeof params.get("devtools") == "string") {
+  window.addEventListener("DOMContentLoaded", (event) => {
+    var script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/eruda";
+    document.body.appendChild(script);
+    script.onload = function () {
+      eruda.init();
+    };
+  });
+}
 chatInput.addEventListener('keydown', function(event) {
     event.stopPropagation();  // Prevent the spacebar event from reaching the game
 });
