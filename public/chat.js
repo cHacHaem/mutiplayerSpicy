@@ -21,9 +21,9 @@ socket.on("chat message", (message)=>{
     let newMes = document.createElement("div");
     let newMesText = document.createElement("h3");
     let newMesPerson = document.createElement("h2");
-    newMesText.innerHtml = message.message;
-    newMesText.class = "message"
-    newMesPerson.innerHtml = message.id;
+    newMesText.innerHTML = message.message;
+    newMesText.setAttribute("class", "message")
+    newMesPerson.innerHTML = message.id;
     newMes.appendChild(newMesPerson);
     newMes.appendChild(newMesText);
     chatContent.appendChild(newMes)
