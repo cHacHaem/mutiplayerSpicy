@@ -12,6 +12,7 @@ if (typeof params.get("devtools") == "string") {
   });
 }
 chatInput.addEventListener('keydown', function(event) {
+    if(event.key)
     event.stopPropagation();  // Prevent the spacebar event from reaching the game
 });
 function sendMessage() {

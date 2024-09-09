@@ -139,7 +139,7 @@ function animatePlayers() {
 
     // Smooth position
     currentPosition.x += (player.targetPosition.x - currentPosition.x) * smoothness;
-    currentPosition.y += (player.targetPosition.y - currentPosition.y) * smoothness;
+    currentPosition.y += (player.targetPosition.y - currentPosition.y-1) * smoothness;
     currentPosition.z += (player.targetPosition.z - currentPosition.z) * smoothness;
 
     // Smooth rotation (Y-axis only)
