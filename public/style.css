@@ -10,3 +10,7 @@
             box-sizing: border-box;
             z-index: 10000; /* Ensure it's above the A-Frame scene */
         }
+.message {
+  background: green;
+  
+}

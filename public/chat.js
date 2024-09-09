@@ -13,5 +13,5 @@ socket.on("chat message", (message)=>{
     let newMesText = document.createElement("h3");
     let newMesPerson = document.createElement("h2");
     newMesText.innerHtml = message.message;
-    
+    newMesPerson.innerHtml = message.id;
   })
