@@ -12,14 +12,21 @@ if (typeof params.get("devtools") == "string") {
   });
 }
 chatInput.addEventListener('keydown', function(event) {
-    if(event.key)
+    if(event.keyCode == 13) {
+      sendMessage();
+    }
     event.stopPropagation();  // Prevent the spacebar event from reaching the game
 });
 function sendMessage() {
  socket.emit("chat message", {message: chatInput.value, time: Date.now(), id: playerId}) 
+  showMessage({message: chatInput.value, time: Date.now(), id: playerId})
+  chatInput.value = "";
 }
 socket.on("chat message", (message)=>{
-    let newMes = document.createElement("div");
+  showMessage(message)
+  })
+function showMessage(message) {
+  let newMes = document.createElement("div");
     let newMesText = document.createElement("h3");
     let newMesPerson = document.createElement("h2");
     newMesText.innerHTML = message.message;
@@ -28,4 +35,4 @@ socket.on("chat message", (message)=>{
     newMes.appendChild(newMesPerson);
     newMes.appendChild(newMesText);
     chatContent.appendChild(newMes)
-  })
+}

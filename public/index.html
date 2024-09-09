@@ -77,7 +77,7 @@
   </style>
 </head>
 <body>
-  <a-scene physics="debug: false; defaultContactMaterial: {friction: 0.1, restitution: 0.3}">
+  <a-scene physics="debug: true; defaultContactMaterial: {friction: 0.1, restitution: 0.3}">
     <a-assets>
       <a-asset-item id="playerSkin" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/Sweatshirt.glb?v=1725725228968"></a-asset-item>
   <a-asset-item id="tree" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/tree.glb?v=1725820185520"></a-asset-item>
@@ -90,8 +90,15 @@
     </a-sphere>
     <a-entity id="map">
       <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -0.5 0" width="200" height="1" depth="200"></a-box>
-    <a-gltf-model src="#tree"></a-gltf-model>
-      <a-gltf-model src="#rock"></a-gltf-model>
+    <a-gltf-model src="#tree" static-body="shape: none" shape__trunk="shape: cylinder;
+                       height: 5;
+                       radiusTop: 1;
+                       offset: 0 2.5 0;                                             
+                       radiusBottom: 1;"
+          shape__leaves="shape: sphere;
+                         radius: 2;
+                         offset: 0 6 0;"></a-gltf-model>
+      <a-gltf-model src="#rock" position=" 2 20 2"></a-gltf-model>
       <a-box static-body></a-box>
     </a-entity>
   </a-scene>
