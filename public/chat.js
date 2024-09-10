@@ -1,5 +1,6 @@
 let chatInput = document.getElementById("chat-input")
 let chatContent = document.getElementById("chat-content")
+let overlay;
 var params = new URLSearchParams(window.location.search);
 if (typeof params.get("devtools") == "string") {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -11,6 +12,11 @@ if (typeof params.get("devtools") == "string") {
     };
   });
 }
+document.addEventListener("keydown", (event)=>{
+  if(event.key == "c") {
+    
+  }
+})
 chatInput.addEventListener('keydown', function(event) {
     if(event.keyCode == 13) {
       sendMessage();
@@ -18,7 +24,7 @@ chatInput.addEventListener('keydown', function(event) {
     event.stopPropagation();  // Prevent the spacebar event from reaching the game
 });
 function sendMessage() {
- socket.emit("chat message", {message: chatInput.value, time: Date.now(), id: playerId}) 
+ socket.emit("chat message", {message: chatInput.value, time: Date.now(), id: playerId, name: name}) 
   showMessage({message: chatInput.value, time: Date.now(), id: playerId})
   chatInput.value = "";
 }
@@ -35,7 +41,7 @@ function showMessage(message) {
       newMesText.setAttribute("align", "right")
     } else {
       newMesText.setAttribute("class", "message")
-      newMesPerson.innerHTML = message.id;
+      newMesPerson.innerHTML = message.name;
     }
     newMesText.innerHTML = message.message;
     newMes.appendChild(newMesPerson);

@@ -35,7 +35,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 1; /* Scene will be behind the overlay */
+      z-index: 2; /* Scene will be behind the overlay */
     }
 
     .overlay {
@@ -47,12 +47,25 @@
       background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
       color: white;
       padding: 10px;
-      z-index: 2; /* Place the overlay above the scene */
+      z-index: 3; /* Place the overlay above the scene */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-
+.overlayunder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: calc(100% - 20px);
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      color: white;
+      padding: 10px;
+      z-index: 1; /* Place the overlay above the scene */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
     #chat-content {
       flex: 1; /* Take available vertical space */
       overflow-y: auto;

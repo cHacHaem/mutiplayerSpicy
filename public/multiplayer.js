@@ -7,7 +7,12 @@ let cam = document.querySelector("#cam");
 let scene = document.querySelector("a-scene");
 let players = {};
 let name;
-if(localStorage)
+if(localStorage.getItem('name')) {
+  name = localStorage.getItem('name');
+} else {
+  name = prompt("What is your player name?");
+  localStorage.setItem("name", name);
+}
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
 function sendUpdate() {
   const position = player.getAttribute("position");
