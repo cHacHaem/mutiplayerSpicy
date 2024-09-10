@@ -26,12 +26,17 @@ socket.on("chat message", (message)=>{
   showMessage(message)
   })
 function showMessage(message) {
-  let newMes = document.createElement("div");
-    let newMesText = document.createElement("h3");
-    let newMesPerson = document.createElement("h2");
+    let newMes = document.createElement("div");
+    let newMesText = document.createElement("h2");
+    let newMesPerson = document.createElement("h3");
+    if(message.id == playerId) {
+      newMesText.setAttribute("class", "messageme")
+      newMesPerson.innerHTML = "me"
+    } else {
+      newMesText.setAttribute("class", "message")
+      newMesPerson.innerHTML = message.id;
+    }
     newMesText.innerHTML = message.message;
-    newMesText.setAttribute("class", "message")
-    newMesPerson.innerHTML = message.id;
     newMes.appendChild(newMesPerson);
     newMes.appendChild(newMesText);
     chatContent.appendChild(newMes)
