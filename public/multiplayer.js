@@ -6,7 +6,8 @@ let player = document.querySelector("#player");
 let cam = document.querySelector("#cam");
 let scene = document.querySelector("a-scene");
 let players = {};
-
+let name;
+if(localStorage)
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
 function sendUpdate() {
   const position = player.getAttribute("position");

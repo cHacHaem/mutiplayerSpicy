@@ -32,6 +32,7 @@ function showMessage(message) {
     if(message.id == playerId) {
       newMesText.setAttribute("class", "messageme")
       newMesPerson.innerHTML = "me"
+      newMesText.setAttribute("align", "right")
     } else {
       newMesText.setAttribute("class", "message")
       newMesPerson.innerHTML = message.id;
