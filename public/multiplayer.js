@@ -1,3 +1,5 @@
+/* mario cart, tag, nockback, spleef, shooting game, capture the flag.
+*/
 const socket = io();
 const playerId = generateRandomString(20);
 let player = document.querySelector("#player");
