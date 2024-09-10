@@ -1,6 +1,7 @@
 let chatInput = document.getElementById("chat-input")
 let chatContent = document.getElementById("chat-content")
-let overlay;
+let chatVisible = true;
+let overlay = document.getElementById("overlay")
 var params = new URLSearchParams(window.location.search);
 if (typeof params.get("devtools") == "string") {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -13,8 +14,12 @@ if (typeof params.get("devtools") == "string") {
   });
 }
 document.addEventListener("keydown", (event)=>{
-  if(event.key == "c") {
-    
+  if(event.key == "c" && chatVisible) {
+    overlay.setAttribute("class", "overlayunder");
+    chatVisible = false;
+  } else if(event.key == "c") {
+    overlay.setAttribute("class", "overlay");
+    chatVisible = true;
   }
 })
 chatInput.addEventListener('keydown', function(event) {
