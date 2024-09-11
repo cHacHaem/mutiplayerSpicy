@@ -35,7 +35,8 @@ io.on("connection", function (socket) {
     socket.broadcast.emit("player update", data);
   });
 
-  socket.on("disconnect", function (data) {
-    console.log(data, socket)
+  socket.on("player left", function (data) {
+    console.log("player left ", data)
+    socket.broadcast.emit("player left", data)
   });
 });
