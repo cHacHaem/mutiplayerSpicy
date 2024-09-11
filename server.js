@@ -35,7 +35,7 @@ io.on("connection", function (socket) {
     socket.broadcast.emit("player update", data);
   });
 
-  socket.on("disconnect", function () {
-    // echo globally that this client has left
+  socket.on("disconnect", function (data) {
+    console.log(data, socket)
   });
 });
