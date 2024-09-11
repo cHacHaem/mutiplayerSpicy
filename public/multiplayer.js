@@ -13,6 +13,9 @@ if(localStorage.getItem('name')) {
   name = prompt("What is your player name?");
   localStorage.setItem("name", name);
 }
+document.addEventListener("beforeunload", ()=>{
+  socket.emit("player left", playerId)
+})
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
 function sendUpdate() {
   const position = player.getAttribute("position");
