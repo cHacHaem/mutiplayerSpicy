@@ -33,6 +33,9 @@ io.on("connection", function (socket) {
       world = "tag1"
       playerId = data.id
       socket.join(world)
+      socket.on("player tagged", (data)=>{
+        console.log("player tagged: ", data)
+      })
     }
       
   })
