@@ -23,12 +23,15 @@ app.use(express.static("public"));
 // Chatroom
 io.on("connection", function (socket) {
   let world;
+  let playerId;
   socket.on("world", (data)=>{
     if(data.world == "hub") {
      world = "hub"
+      playerId = data.id;
       socket.join(world)
     } else if(data.world == "tag") {
       world = "tag1"
+      playerId = data.id
       socket.join(world)
     }
       
@@ -47,8 +50,7 @@ io.on("connection", function (socket) {
     socket.to(world).emit("player update", data);
   });
 
-  socket.on("player left", function (data) {
-    console.log("player left ", data)
-    socket.to(world).emit("player left", data)
+  socket.on("disconnect", function (data) {
+    socket.to(world).emit("player left", )
   });
 });
