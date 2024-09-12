@@ -14,8 +14,9 @@ if(localStorage.getItem('name')) {
   name = prompt("What is your player name?");
   localStorage.setItem("name", name);
 }
-document.addEventListener("beforeunload", ()=>{
-  socket.emit("player left", playerId)
+socket.on("player left", (evt)=>{
+  players[evt].entity.parentNode.removeChild(players[evt].entity)
+  delete players[evt]
 })
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
 function sendUpdate() {

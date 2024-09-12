@@ -7,6 +7,10 @@ let cam = document.querySelector("#cam");
 let scene = document.querySelector("a-scene");
 let players = {};
 let name;
+socket.on("player left", (evt)=>{
+  players[evt].entity.parentNode.removeChild(players[evt].entity)
+  delete players[evt]
+})
 socket.emit("world", {world: "tag", id: playerId})
 if(localStorage.getItem('name')) {
   name = localStorage.getItem('name');
@@ -94,7 +98,7 @@ socket.on("player update", (stuff) => {
     newPlayerHitbox.setAttribute("visible", "false");
     newPlayerHitbox.setAttribute("position", "0 0.5 0");
     newPlayerHitbox.setAttribute("height", "3.1");
-
+    newPlayerHitbox.setAttribute("id", stuff.id)
     newPlayer.appendChild(newPlayerHitbox);
     players[stuff.id] = { 
       entity: newPlayer, 

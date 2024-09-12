@@ -51,6 +51,6 @@ io.on("connection", function (socket) {
   });
 
   socket.on("disconnect", function (data) {
-    socket.to(world).emit("player left", )
+    socket.to(world).emit("player left", playerId);
   });
 });
