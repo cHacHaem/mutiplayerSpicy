@@ -26,10 +26,10 @@ io.on("connection", function (socket) {
   socket.on("world", (data)=>{
     if(data.world == "hub") {
      world = "hub"
-      socket.join("hub")
+      socket.join(world)
     } else if(data.world == "tag") {
       world = "tag1"
-      socket.join("ta")
+      socket.join(world)
     }
       
   })
@@ -40,15 +40,15 @@ io.on("connection", function (socket) {
    // const data2 = fs.readFileSync('chat.json');
   //chat = JSON.parse(data2) || {};
     //console.log(chat)
-    socket.broadcast.emit("chat message", data)
+    socket.to(world).emit("chat message", data)
   })
   socket.on("player update", function (data) {
     // we tell the client to execute 'new message'
-    socket.broadcast.emit("player update", data);
+    socket.to(world).emit("player update", data);
   });
 
   socket.on("player left", function (data) {
     console.log("player left ", data)
-    socket.broadcast.emit("player left", data)
+    socket.to(world).emit("player left", data)
   });
 });
