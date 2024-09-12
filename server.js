@@ -6,6 +6,7 @@ var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 var port = process.env.PORT || 3000;
 let chat = {};
+let game = {hub: [], }
 try {
   const data = fs.readFileSync('chat.json');
   chat = JSON.parse(data) || {};
@@ -21,6 +22,12 @@ app.use(express.static("public"));
 
 // Chatroom
 io.on("connection", function (socket) {
+  socket.on("world", (data)=>{
+    if(data.world == "hub") {
+      
+    }
+      
+  })
   socket.on("chat message", function (data) {
     console.log(data)
     chat[data.time] = {message: data.message, id: data.id, name: data.name}

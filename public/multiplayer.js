@@ -7,6 +7,7 @@ let cam = document.querySelector("#cam");
 let scene = document.querySelector("a-scene");
 let players = {};
 let name;
+socket.emit("world", {world: "hub", id: playerId})
 if(localStorage.getItem('name')) {
   name = localStorage.getItem('name');
 } else {
