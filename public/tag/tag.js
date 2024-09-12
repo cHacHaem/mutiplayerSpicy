@@ -1,4 +1,5 @@
 let whoIt = "";
+let itMarker = document.createElement("a-sphere").setAttribute("color", "red");
 // add tag cooldown
 console.log(playerId)
 player.addEventListener('collide', function (e) {
@@ -12,3 +13,6 @@ player.addEventListener('collide', function (e) {
     whoIt = otherDude
   }
 });
+function tagPlayer(taggedPlayer) {
+  players[taggedPlayer].entity.appendChild()
+}
