@@ -35,6 +35,7 @@ io.on("connection", function (socket) {
       socket.join(world)
       socket.on("player tagged", (data)=>{
         console.log("player tagged: ", data)
+        socket.to(world).emit("player tagged", data)
       })
     }
       
