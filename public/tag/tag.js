@@ -8,7 +8,6 @@ console.log(playerId);
 
 player.addEventListener('collide', function (e) {
   let otherDude = e.detail.body.el.id;
-  console.log(otherDude);
   
   // If the player is colliding with the current "it"
   if (otherDude === whoIt) {
@@ -22,17 +21,17 @@ player.addEventListener('collide', function (e) {
   }
 });
 
-// Listen for the "player tagged" event from the server
-socket.on("player tagged", (evt) => {
-  whoIt = evt;
-  console.log(`Player tagged: ${whoIt}`);
-});
+/*socket.on("player tagged", (evt) => {
+  tagPlayer(evt)
+});*/
 
 // Function to handle tagging logic
 function tagPlayer(taggedPlayer) {
   // Remove the marker from the current "it" player if there's already one tagged
-  if (whoIt && players[whoIt] && players[whoIt].entity) {
+  if (whoIt && whoIt != playerId) {
     players[whoIt].entity.removeChild(itMarker);  // Remove the marker from the previous "it"
+  }  else if(whoIt === playerId) {
+    player.removeChild(itMarker);  // Remove the marker from the previous "it"
   }
 
   // If the current player is tagged
@@ -44,5 +43,4 @@ function tagPlayer(taggedPlayer) {
   }
 
   whoIt = taggedPlayer;  // Update who is "it"
-  console.log(players[taggedPlayer]);
 }
