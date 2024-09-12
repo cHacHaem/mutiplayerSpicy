@@ -6,7 +6,7 @@ var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 var port = process.env.PORT || 3000;
 let chat = {};
-let game = {hub: [], }
+let game = {hub: [], tag1: [], tag2: []}
 try {
   const data = fs.readFileSync('chat.json');
   chat = JSON.parse(data) || {};
@@ -22,9 +22,14 @@ app.use(express.static("public"));
 
 // Chatroom
 io.on("connection", function (socket) {
+  let world;
   socket.on("world", (data)=>{
     if(data.world == "hub") {
-      
+     world = "hub"
+      socket.join("hub")
+    } else if(data.world == "tag") {
+      world = "tag1"
+      socket.join("ta")
     }
       
   })
