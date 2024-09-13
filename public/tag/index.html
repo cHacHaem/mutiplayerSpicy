@@ -21,11 +21,19 @@
   border-radius: 7px;
   color:black;
 }
-    .gameInfo {
-      z-index: 3
+    .gameinfo {
       position: absolute;
       top: 0;
-      left: ;
+      left: 0;
+      width: 300px;
+      height: calc(100% - 20px);
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      color: white;
+      padding: 10px;
+      z-index: 3; /* Place the overlay above the scene */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .messageme {
       background: blue;
@@ -130,9 +138,11 @@
       <a-box static-body></a-box>
     </a-entity>
   </a-scene>
-<h1 class="gameinfo">
-    It
+<div class="gameinfo">
+  <h1>
+    hi
   </h1>
+  </div>
   <div class="overlay" id="overlay">
     <div id="chat-content">
       <!-- Chat messages will appear here -->
