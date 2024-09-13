@@ -21,12 +21,13 @@ player.addEventListener('collide', function (e) {
   }
 });
 
-/*socket.on("player tagged", (evt) => {
+socket.on("player tagged", (evt) => {
   tagPlayer(evt)
-});*/
+});
 
 // Function to handle tagging logic
 function tagPlayer(taggedPlayer) {
+  console.log("putting it on: ", taggedPlayer)
   // Remove the marker from the current "it" player if there's already one tagged
   if (whoIt && whoIt != playerId) {
     players[whoIt].entity.removeChild(itMarker);  // Remove the marker from the previous "it"

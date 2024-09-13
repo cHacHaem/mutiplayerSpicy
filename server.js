@@ -23,6 +23,7 @@ app.use(express.static("public"));
 // Chatroom
 io.on("connection", function (socket) {
   let world;
+  let whoIt;
   let playerId;
   socket.on("world", (data)=>{
     if(data.world == "hub") {
@@ -36,6 +37,7 @@ io.on("connection", function (socket) {
       socket.on("player tagged", (data)=>{
         console.log("player tagged: ", data)
         socket.to(world).emit("player tagged", data)
+        whoIt = data
       })
     }
       
