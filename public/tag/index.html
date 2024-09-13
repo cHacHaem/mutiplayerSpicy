@@ -24,16 +24,11 @@
     .gameinfo {
       position: absolute;
       top: 0;
-      left: 0;
-      width: 300px;
-      height: calc(100% - 20px);
+      left: 50%;
       background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
       color: white;
-      padding: 10px;
+      border-radius: 5px;
       z-index: 3; /* Place the overlay above the scene */
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
     .messageme {
       background: blue;
@@ -139,8 +134,11 @@
     </a-entity>
   </a-scene>
 <div class="gameinfo">
-  <h1>
-    hi
+  <h1 id="timeleft">
+    1:00
+  </h1>
+  <h1 id="it">
+      
   </h1>
   </div>
   <div class="overlay" id="overlay">
