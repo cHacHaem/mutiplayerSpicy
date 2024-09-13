@@ -50,6 +50,9 @@ io.on("connection", function (socket) {
   //chat = JSON.parse(data2) || {};
     //console.log(chat)
     socket.to(world).emit("chat message", data)
+    if(data.message == "start") {
+      socket.to(world).emit("player tagged", data.id)
+    }
   })
   socket.on("player update", function (data) {
     // we tell the client to execute 'new message'

@@ -31,13 +31,14 @@ function tagPlayer(taggedPlayer) {
   if (whoIt && whoIt != playerId) {
        players[whoIt].entity.querySelector("a-sphere").setAttribute("visible", "false")
   }  else if(whoIt === playerId) {
-    player.querySelector("a-sphere").setAttribute("visible", "false")  // Remove the marker from the previous "it"
     it.innerHTML = "Run Away!"
+    it.class = "notit"
   }
 
   // If the current player is tagged
   if (playerId === taggedPlayer) {
-    player.querySelector("a-sphere").setAttribute("visible", "true");  // Add the marker to the current player
+    it.innerHTML = "Your It!"
+    it.class = "it"
   } else {
     // Ensure the tagged player exists in the game
       players[taggedPlayer].entity.querySelector("a-sphere").setAttribute("visible", "true")  // Add the marker to the tagged player
