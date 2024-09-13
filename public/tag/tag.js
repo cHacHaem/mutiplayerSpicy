@@ -1,5 +1,6 @@
 /* global playerId socket player players */
 let whoIt = "";
+let it = document.getElementById("it")
  // Adjust size if necessary
 //each plauyer has marker just change visibility
 console.log(playerId);
@@ -31,6 +32,7 @@ function tagPlayer(taggedPlayer) {
        players[whoIt].entity.querySelector("a-sphere").setAttribute("visible", "false")
   }  else if(whoIt === playerId) {
     player.querySelector("a-sphere").setAttribute("visible", "false")  // Remove the marker from the previous "it"
+    it.innerHTML = "Run Away!"
   }
 
   // If the current player is tagged
