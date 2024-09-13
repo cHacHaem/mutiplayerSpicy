@@ -28,17 +28,17 @@ function tagPlayer(taggedPlayer) {
   console.log("putting it on: ", taggedPlayer)
   // Remove the marker from the current "it" player if there's already one tagged
   if (whoIt && whoIt != playerId) {
-      // Remove the marker from the previous "it"
+       players[whoIt].entity.querySelector("a-sphere").setAttribute("visible", "false")
   }  else if(whoIt === playerId) {
-    player.removeChild(itMarker);  // Remove the marker from the previous "it"
+    player.querySelector("a-sphere").setAttribute("visible", "false")  // Remove the marker from the previous "it"
   }
 
   // If the current player is tagged
   if (playerId === taggedPlayer) {
-    player.appendChild(itMarker);  // Add the marker to the current player
+    player.querySelector("a-sphere").setAttribute("visible", "true");  // Add the marker to the current player
   } else {
     // Ensure the tagged player exists in the game
-      players[taggedPlayer].entity.appendChild(itMarker);  // Add the marker to the tagged player
+      players[taggedPlayer].entity.querySelector("a-sphere").setAttribute("visible", "true")  // Add the marker to the tagged player
   }
 
   whoIt = taggedPlayer;  // Update who is "it"
