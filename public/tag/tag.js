@@ -1,9 +1,7 @@
 /* global playerId socket player players */
 let whoIt = "";
-let itMarker = document.createElement("a-sphere");
-itMarker.setAttribute("color", "red");
-itMarker.setAttribute("radius", "0.5");  // Adjust size if necessary
-
+ // Adjust size if necessary
+//each plauyer has marker just change visibility
 console.log(playerId);
 
 player.addEventListener('collide', function (e) {
@@ -30,7 +28,7 @@ function tagPlayer(taggedPlayer) {
   console.log("putting it on: ", taggedPlayer)
   // Remove the marker from the current "it" player if there's already one tagged
   if (whoIt && whoIt != playerId) {
-    players[whoIt].entity.removeChild(itMarker);  // Remove the marker from the previous "it"
+      // Remove the marker from the previous "it"
   }  else if(whoIt === playerId) {
     player.removeChild(itMarker);  // Remove the marker from the previous "it"
   }

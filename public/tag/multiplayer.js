@@ -93,6 +93,11 @@ socket.on("player update", (stuff) => {
     newPlayer.setAttribute("move", "clip: Idle");
     newPlayer.setAttribute("rotation", `0 ${stuff.rotation.y} 0`);
 
+    //it marker
+    let itMarker = document.createElement("a-sphere");
+itMarker.setAttribute("color", "red");
+itMarker.setAttribute("radius", "0.5"); 
+    itMarker.setAttribute("visible", false)
     // Set up the hitbox
     newPlayerHitbox.setAttribute("static-body", { shape: "cylinder" });
     newPlayerHitbox.setAttribute("visible", "false");
@@ -100,6 +105,7 @@ socket.on("player update", (stuff) => {
     newPlayerHitbox.setAttribute("height", "3.1");
     newPlayerHitbox.setAttribute("id", stuff.id)
     newPlayer.appendChild(newPlayerHitbox);
+    newPlayer.appendChild(itMarker)
     players[stuff.id] = { 
       entity: newPlayer, 
       targetPosition: stuff.position, 
