@@ -21,13 +21,28 @@
   border-radius: 7px;
   color:black;
 }
+    .notit {
+      color: lightgreen;
+      margin-left: 20px;
+      margin-right: 5px;
+    }
+    .it {
+      color: red;
+      margin-left: 20px;
+      margin-right: 5px;
+    }
+    #timeleft {
+      margin-left: 5px;
+    }
     .gameinfo {
       position: absolute;
       top: 0;
+      display: flex;
       left: 50%;
       background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
       color: white;
       border-radius: 5px;
+      user-select: none;
       z-index: 3; /* Place the overlay above the scene */
     }
     .messageme {
@@ -46,7 +61,7 @@
       height: 100%;
       z-index: 2; /* Scene will be behind the overlay */
     }
-
+    
     .overlay {
       position: absolute;
       top: 0;
@@ -137,8 +152,8 @@
   <h1 id="timeleft">
     1:00
   </h1>
-  <h1 id="it">
-      
+  <h1 id="it" class="notit">
+    Run Away
   </h1>
   </div>
   <div class="overlay" id="overlay">
