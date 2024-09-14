@@ -96,7 +96,7 @@ socket.on("player update", (stuff) => {
     //it marker
     let itMarker = document.createElement("a-entity");
 itMarker.setAttribute("gltf-model", "#arrow");
-    itMarker.setAttribute("class", "marker")
+    itMarker.setAttribute("id", "marker")
     itMarker.setAttribute("position", "0 1 0")
     itMarker.setAttribute("visible", false)
     // Set up the hitbox
