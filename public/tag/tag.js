@@ -7,7 +7,7 @@ let timeLeftEl = document.getElementById("timeleft")
 //each plauyer has marker just change visibility
 console.log(playerId);
 socket.on("game start", (itFirst)=>{
-  whoIt = itFirst;
+  tagPlayer(itFirst)
   gameStarted = true;
 })
 function formatTime(seconds) {

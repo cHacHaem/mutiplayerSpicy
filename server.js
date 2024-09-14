@@ -72,7 +72,7 @@ io.on("connection", function (socket) {
     let players = game[world].players;
   const randomIndex = Math.floor(Math.random() * players.length);
     game[world].whoIt = players[randomIndex]
-    socket.to(world).emit("game start", players[randomIndex])
+    io.to(world).emit("game start", players[randomIndex])
   }
   //general
   socket.on("chat message", function (data) {
