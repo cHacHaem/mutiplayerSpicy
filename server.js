@@ -38,12 +38,21 @@ io.on("connection", function (socket) {
       if (!game.tag1.started) {
         world = "tag1";
         game.tag1.players.push(playerId)
+        if(game.tag1.players.length > 1) {
+          game.tag1.started = true;
+        }
       } else if (!game.tag2.started) {
         world = "tag2";
         game.tag2.players.push(playerId)
+        if(game.tag2.players.length > 1) {
+          game.tag2.started = true;
+        }
       } else if (!game.tag3.started) {
         world = "tag3";
         game.tag3.players.push(playerId)
+        if(game.tag3.players.length > 1) {
+          game.tag3.started = true;
+        }
       }
       playerId = data.id;
       socket.join(world);
