@@ -27,6 +27,7 @@ app.use(express.static("public"));
 
 // Chatroom
 io.on("connection", function (socket) {
+  console.log(game);
   let world;
   let playerId;
   //room sort and world connection
@@ -40,6 +41,7 @@ io.on("connection", function (socket) {
         world = "tag1";
         socket.join(world);
         game.tag1.players.push(playerId)
+        console.log(game.tag1.players.length)
         if(game.tag1.players.length > 1) {
           startTag()
         }
@@ -60,6 +62,7 @@ io.on("connection", function (socket) {
       }
     }
   });
+  console.log(game)
   //tag
   function startTag() {
     game[world].started = true;
@@ -67,8 +70,10 @@ io.on("connection", function (socket) {
         console.log("player tagged: ", data);
         socket.to(world).emit("player tagged", data);
       });
-    game[world].players
-    socket.to(world).emit("game start")
+    let players = game[world].players;
+  const randomIndex = Math.floor(Math.random() * players.length);
+    game[world].whoIt = players[randomIndex]
+    socket.to(world).emit("game start", players[randomIndex])
   }
   //general
   socket.on("chat message", function (data) {

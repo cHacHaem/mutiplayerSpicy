@@ -1,13 +1,30 @@
 /* global playerId socket player players */
 let whoIt = "";
+let gameStarted = false;
 let it = document.getElementById("it")
 let timeLeftEl = document.getElementById("timeleft")
  // Adjust size if necessary
 //each plauyer has marker just change visibility
 console.log(playerId);
+socket.on("game start", (itFirst)=>{
+  whoIt = itFirst;
+  gameStarted = true;
+})
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  // Pad the seconds with a leading zero if less than 10
+  const paddedSeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
+  return minutes + ':' + paddedSeconds;
+}
+
+// Example usage
+console.log(formatTime(60));  // Output: 1:00
+console.log(formatTime(75));  // Output: 1:15
+console.log(formatTime(45));  // Output: 0:45
 
 player.addEventListener('collide', function (e) {
-  {
+  if(gameStarted) {
     let otherDude = e.detail.body.el.id;
   
   // If the player is colliding with the current "it"
