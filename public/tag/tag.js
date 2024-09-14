@@ -32,13 +32,13 @@ function tagPlayer(taggedPlayer) {
        players[whoIt].entity.querySelector("a-sphere").setAttribute("visible", "false")
   }  else if(whoIt === playerId) {
     it.innerHTML = "Run Away!"
-    it.class = "notit"
+    it.setAttribute("class", "notit")
   }
 
   // If the current player is tagged
   if (playerId === taggedPlayer) {
     it.innerHTML = "Your It!"
-    it.class = "it"
+    it.setAttribute("class", "it")
   } else {
     // Ensure the tagged player exists in the game
       players[taggedPlayer].entity.querySelector("a-sphere").setAttribute("visible", "true")  // Add the marker to the tagged player
