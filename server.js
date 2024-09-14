@@ -6,7 +6,7 @@ var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 var port = process.env.PORT || 3000;
 let chat = {};
-let game = {hub: [], tag1: [], tag2: []}
+let game = {hub: {}, tag1: {started: false}, tag2: {started: false}, tag3: {started: false}}
 try {
   const data = fs.readFileSync('chat.json');
   chat = JSON.parse(data) || {};
@@ -31,6 +31,7 @@ io.on("connection", function (socket) {
       playerId = data.id;
       socket.join(world)
     } else if(data.world == "tag") {
+      if(game.tag1)
       world = "tag1"
       playerId = data.id
       socket.join(world)
@@ -50,9 +51,6 @@ io.on("connection", function (socket) {
   //chat = JSON.parse(data2) || {};
     //console.log(chat)
     socket.to(world).emit("chat message", data)
-    if(data.message == "start") {
-      socket.to(world).emit("player tagged", data.id)
-    }
   })
   socket.on("player update", function (data) {
     // we tell the client to execute 'new message'

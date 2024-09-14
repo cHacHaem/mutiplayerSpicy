@@ -94,9 +94,10 @@ socket.on("player update", (stuff) => {
     newPlayer.setAttribute("rotation", `0 ${stuff.rotation.y} 0`);
 
     //it marker
-    let itMarker = document.createElement("a-sphere");
-itMarker.setAttribute("color", "red");
-itMarker.setAttribute("radius", "0.5"); 
+    let itMarker = document.createElement("a-entity");
+itMarker.setAttribute("gltf-model", "#arrow");
+    itMarker.setAttribute("class", "marker")
+    itMarker.setAttribute("position", "0 1 0")
     itMarker.setAttribute("visible", false)
     // Set up the hitbox
     newPlayerHitbox.setAttribute("static-body", { shape: "cylinder" });
