@@ -27,7 +27,6 @@ app.use(express.static("public"));
 
 // Chatroom
 io.on("connection", function (socket) {
-  console.log(game);
   let world;
   let playerId;
   //room sort and world connection
@@ -61,8 +60,8 @@ io.on("connection", function (socket) {
         }
       }
     }
+    console.log(game)
   });
-  console.log(game)
   //tag
   function startTag() {
     game[world].started = true;
@@ -84,7 +83,7 @@ io.on("connection", function (socket) {
     //chat = JSON.parse(data2) || {};
     //console.log(chat)
     socket.to(world).emit("chat message", data);
-  });
+  }); 
   socket.on("player update", function (data) {
     // we tell the client to execute 'new message'
     socket.to(world).emit("player update", data);
@@ -92,5 +91,9 @@ io.on("connection", function (socket) {
 
   socket.on("disconnect", function (data) {
     socket.to(world).emit("player left", playerId);
+    const index = game[world].players.indexOf(playerId); // Find the index of the string
+  if (index !== -1) { // Check if the string exists in the array
+    game[world].players.splice(index, 1); // Remove the string at the found index
+  }
   });
 });
