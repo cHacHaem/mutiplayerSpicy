@@ -7,8 +7,10 @@ let timeLeftEl = document.getElementById("timeleft")
 //each plauyer has marker just change visibility
 console.log(playerId);
 socket.on("game start", (itFirst)=>{
-  tagPlayer(itFirst)
+  setTimeout(()=>{
+     tagPlayer(itFirst)
   gameStarted = true;
+  }, 2000)
 })
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -49,7 +51,7 @@ function tagPlayer(taggedPlayer) {
   console.log("putting it on: ", taggedPlayer)
   // Remove the marker from the current "it" player if there's already one tagged
   if (whoIt && whoIt != playerId) {
-       players[whoIt].entity.querySelector(".marker").setAttribute("visible", "false")
+       document.getElementById("marker"+taggedPlayer).setAttribute("visible", "false")
   }  else if(whoIt === playerId) {
     it.innerHTML = "Run Away!"
     it.setAttribute("class", "notit")
@@ -61,7 +63,7 @@ function tagPlayer(taggedPlayer) {
     it.setAttribute("class", "it")
   } else {
     // Ensure the tagged player exists in the game
-      players[taggedPlayer].entity.querySelector(".marker").setAttribute("visible", "true")  // Add the marker to the tagged player
+       document.getElementById("marker"+taggedPlayer).setAttribute("visible", "true")  // Add the marker to the tagged player
   }
 
   whoIt = taggedPlayer;  // Update who is "it"

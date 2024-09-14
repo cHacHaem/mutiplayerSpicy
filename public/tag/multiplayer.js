@@ -96,7 +96,7 @@ socket.on("player update", (stuff) => {
     //it marker
     let itMarker = document.createElement("a-entity");
 itMarker.setAttribute("gltf-model", "#arrow");
-    itMarker.setAttribute("id", "marker")
+    itMarker.setAttribute("id", "marker"+stuff.id)
     itMarker.setAttribute("position", "0 1 0")
     itMarker.setAttribute("visible", false)
     // Set up the hitbox
@@ -106,7 +106,7 @@ itMarker.setAttribute("gltf-model", "#arrow");
     newPlayerHitbox.setAttribute("height", "3.1");
     newPlayerHitbox.setAttribute("id", stuff.id)
     newPlayer.appendChild(newPlayerHitbox);
-    newPlayer.appendChild(itMarker)
+    newPlayer.appendChild(itMarker);
     players[stuff.id] = { 
       entity: newPlayer, 
       targetPosition: stuff.position, 
