@@ -1,12 +1,14 @@
 /* global playerId socket player players */
 let whoIt = "";
 let it = document.getElementById("it")
+let timeLeftEl = document.getElementById("timeleft")
  // Adjust size if necessary
 //each plauyer has marker just change visibility
 console.log(playerId);
 
 player.addEventListener('collide', function (e) {
-  let otherDude = e.detail.body.el.id;
+  {
+    let otherDude = e.detail.body.el.id;
   
   // If the player is colliding with the current "it"
   if (otherDude === whoIt) {
@@ -17,6 +19,7 @@ player.addEventListener('collide', function (e) {
   else if (otherDude in players) {
     socket.emit("player tagged", otherDude);
     tagPlayer(otherDude);
+  }
   }
 });
 

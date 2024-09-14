@@ -29,39 +29,48 @@ app.use(express.static("public"));
 io.on("connection", function (socket) {
   let world;
   let playerId;
+  //room sort and world connection
   socket.on("world", (data) => {
+    playerId = data.id;
     if (data.world == "hub") {
       world = "hub";
-      playerId = data.id;
       socket.join(world);
     } else if (data.world == "tag") {
       if (!game.tag1.started) {
         world = "tag1";
+        socket.join(world);
         game.tag1.players.push(playerId)
         if(game.tag1.players.length > 1) {
-          game.tag1.started = true;
+          startTag()
         }
       } else if (!game.tag2.started) {
         world = "tag2";
+        socket.join(world);
         game.tag2.players.push(playerId)
         if(game.tag2.players.length > 1) {
-          game.tag2.started = true;
+          startTag()
         }
       } else if (!game.tag3.started) {
         world = "tag3";
+        socket.join(world);
         game.tag3.players.push(playerId)
         if(game.tag3.players.length > 1) {
-          game.tag3.started = true;
+          startTag()
         }
       }
-      playerId = data.id;
-      socket.join(world);
-      socket.on("player tagged", (data) => {
+    }
+  });
+  //tag
+  function startTag() {
+    game[world].started = true;
+    socket.on("player tagged", (data) => {
         console.log("player tagged: ", data);
         socket.to(world).emit("player tagged", data);
       });
-    }
-  });
+    game[world].players
+    socket.to(world).emit("game start")
+  }
+  //general
   socket.on("chat message", function (data) {
     console.log(data);
     chat[data.time] = { message: data.message, id: data.id, name: data.name };
