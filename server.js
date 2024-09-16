@@ -91,7 +91,8 @@ io.on("connection", function (socket) {
 
   socket.on("disconnect", function (data) {
     socket.to(world).emit("player left", playerId);
-    const index = game[world].players.indexOf(playerId); // Find the index of the string
+    let index; 
+    if(game[world].players) index = game[world].players.indexOf(playerId); // Find the index of the string
   if (index !== -1) { // Check if the string exists in the array
     game[world].players.splice(index, 1); // Remove the string at the found index
   }
