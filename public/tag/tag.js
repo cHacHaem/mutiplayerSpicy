@@ -56,7 +56,7 @@ function tagPlayer(taggedPlayer) {
   // Remove the marker from the current "it" player if there's already one tagged
   if (whoIt && whoIt != playerId) {
        document.getElementById("marker"+taggedPlayer).setAttribute("visible", "false")
-  }  else if(whoIt === playerId) {
+  }  else if(playerId != taggedPlayer) {
     it.innerHTML = "Run Away!"
     it.setAttribute("class", "notit")
   }
