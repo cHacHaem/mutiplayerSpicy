@@ -73,6 +73,9 @@ io.on("connection", function (socket) {
   const randomIndex = Math.floor(Math.random() * players.length);
     game[world].whoIt = players[randomIndex]
     io.to(world).emit("game start", players[randomIndex])
+    setInterval(()=>{
+      socket.to(world).emit("player tagged", game.world.whoIt)
+    })
   }
   //general
   socket.on("chat message", function (data) {
@@ -94,7 +97,9 @@ io.on("connection", function (socket) {
     let index; 
     if(game[world].players) index = game[world].players.indexOf(playerId); // Find the index of the string
   if (index !== -1) { // Check if the string exists in the array
+    game[world].started = false
     game[world].players.splice(index, 1); // Remove the string at the found index
   }
+    console.log(game)
   });
 });
