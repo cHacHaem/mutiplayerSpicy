@@ -10,6 +10,7 @@ socket.on("game start", (itFirst)=>{
   setTimeout(()=>{
      tagPlayer(itFirst)
   gameStarted = true;
+    timeLeftEl.innerHTML = "Game Started"
   }, 2000)
 })
 function formatTime(seconds) {
