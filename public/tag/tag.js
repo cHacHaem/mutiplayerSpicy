@@ -13,6 +13,9 @@ socket.on("game start", (itFirst)=>{
     timeLeftEl.innerHTML = "Game Started"
   }, 2000)
 })
+socket.on("world", (world)=>{
+  timeLeftEl.innerHTML ="world: " + world
+})
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;

@@ -38,7 +38,8 @@ io.on("connection", function (socket) {
     } else if (data.world == "tag") {
       if (!game.tag1.started) {
         world = "tag1";
-        socket.join(world);
+        socket.join(world)
+        socket.emit("world", world);
         game.tag1.players.push(playerId)
         console.log(game.tag1.players.length)
         if(game.tag1.players.length > 1) {
@@ -47,6 +48,7 @@ io.on("connection", function (socket) {
       } else if (!game.tag2.started) {
         world = "tag2";
         socket.join(world);
+        socket.emit("world", world)
         game.tag2.players.push(playerId)
         if(game.tag2.players.length > 1) {
           startTag()
@@ -54,6 +56,7 @@ io.on("connection", function (socket) {
       } else if (!game.tag3.started) {
         world = "tag3";
         socket.join(world);
+        socket.emit("world", world)
         game.tag3.players.push(playerId)
         if(game.tag3.players.length > 1) {
           startTag()
@@ -75,7 +78,8 @@ io.on("connection", function (socket) {
     io.to(world).emit("game start", players[randomIndex])
     setInterval(()=>{
       socket.to(world).emit("player tagged", game.world.whoIt)
-    })
+socket.emit("player tagged", game.world.whoIt)
+    }, 60)
   }
   //general
   socket.on("chat message", function (data) {
