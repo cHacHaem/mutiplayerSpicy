@@ -94,9 +94,10 @@ socket.emit("player tagged", game.world.whoIt)
   socket.on("player update", function (data) {
     // we tell the client to execute 'new message'
     socket.to(world).emit("player update", data);
+    console.log(data)
   });
 
-  socket.on("disconnect", function (data) {
+  /*socket.on("disconnect", function (data) {
     socket.to(world).emit("player left", playerId);
     let index; 
     if(game[world].players) index = game[world].players.indexOf(playerId); // Find the index of the string
@@ -105,5 +106,5 @@ socket.emit("player tagged", game.world.whoIt)
     game[world].players.splice(index, 1); // Remove the string at the found index
   }
     console.log(game)
-  });
+  });*/
 });

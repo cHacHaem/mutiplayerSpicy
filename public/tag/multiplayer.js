@@ -83,6 +83,7 @@ function sendUpdate() {
 setInterval(sendUpdate, 60);
 
 socket.on("player update", (stuff) => {
+  console.log(stuff)
   if (stuff.id !== playerId && !(stuff.id in players)) {
     let newPlayer = document.createElement("a-entity");
     let newPlayerHitbox = document.createElement("a-cylinder");
