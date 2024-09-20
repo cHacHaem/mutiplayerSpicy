@@ -20,6 +20,8 @@ if(localStorage.getItem('name')) {
 }
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
 function sendUpdate() {
+  console.log(player)
+  if(player.body.velocity != undefined) {
   const position = player.getAttribute("position");
   const rotation = cam.getAttribute("rotation");
   const velocity = player.body.velocity;  // Assuming you have Cannon.js or similar physics library
@@ -74,6 +76,7 @@ function sendUpdate() {
     rotation: rotation,
     movementState: movementState  // Send the determined movement state
   });
+  }
 }
 console.log(player.body)
 if(player.body != undefined) setInterval(sendUpdate, 60);
