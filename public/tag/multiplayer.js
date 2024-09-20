@@ -81,7 +81,7 @@ function sendUpdate() {
 
 
 setInterval(sendUpdate, 60);
-
+console.log("hii")
 socket.on("player update", (stuff) => {
   console.log(stuff)
   if (stuff.id !== playerId && !(stuff.id in players)) {

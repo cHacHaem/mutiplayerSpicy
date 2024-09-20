@@ -93,7 +93,6 @@ io.on("connection", function (socket) {
   socket.on("player update", function (data) {
     // we tell the client to execute 'new message'
     socket.to(world).emit("player update", data);
-    console.log(data)
     console.log(world)
   });
 
