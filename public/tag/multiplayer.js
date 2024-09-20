@@ -18,9 +18,6 @@ if(localStorage.getItem('name')) {
   name = prompt("What is your player name?");
   localStorage.setItem("name", name);
 }
-document.addEventListener("beforeunload", ()=>{
-  socket.emit("player left", playerId)
-})
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
 function sendUpdate() {
   const position = player.getAttribute("position");
@@ -78,10 +75,7 @@ function sendUpdate() {
     movementState: movementState  // Send the determined movement state
   });
 }
-
-
-setInterval(sendUpdate, 60);
-console.log("hii")
+if(player.body.velocity) setInterval(sendUpdate, 60);
 socket.on("player update", (stuff) => {
   console.log(stuff)
   if (stuff.id !== playerId && !(stuff.id in players)) {

@@ -23,7 +23,6 @@ function formatTime(seconds) {
   const paddedSeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
   return minutes + ':' + paddedSeconds;
 }
-
 // Example usage
 console.log(formatTime(60));  // Output: 1:00
 console.log(formatTime(75));  // Output: 1:15
@@ -67,7 +66,7 @@ function tagPlayer(taggedPlayer) {
     it.setAttribute("class", "it")
   } else {
     // Ensure the tagged player exists in the game
-       document.getElementById("marker"+taggedPlayer).setAttribute("visible", "true")  // Add the marker to the tagged player
+       if(document.getElementById("marker"+taggedPlayer)) document.getElementById("marker"+taggedPlayer).setAttribute("visible", "true")  // Add the marker to the tagged player
   }
 
   whoIt = taggedPlayer;  // Update who is "it"
