@@ -94,6 +94,7 @@ io.on("connection", function (socket) {
     // we tell the client to execute 'new message'
     socket.to(world).emit("player update", data);
     console.log(data)
+    console.log(world)
   });
 
   /*socket.on("disconnect", function (data) {
