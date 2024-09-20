@@ -19,6 +19,7 @@ if(localStorage.getItem('name')) {
   localStorage.setItem("name", name);
 }
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
+console.log("name")
 function sendUpdate() {
   console.log(player)
   if(player.body.velocity != undefined) {
