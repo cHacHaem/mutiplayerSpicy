@@ -75,7 +75,9 @@ function sendUpdate() {
     movementState: movementState  // Send the determined movement state
   });
 }
-if(player.body.velocity) setInterval(sendUpdate, 60);
+console.log(player.body)
+if(player.body != undefined) setInterval(sendUpdate, 60);
+console.log("hi")
 socket.on("player update", (stuff) => {
   console.log(stuff)
   if (stuff.id !== playerId && !(stuff.id in players)) {
