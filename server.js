@@ -78,7 +78,6 @@ io.on("connection", function (socket) {
     io.to(world).emit("game start", players[randomIndex])
     setInterval(()=>{
       socket.to(world).emit("player tagged", game.world.whoIt)
-socket.emit("player tagged", game.world.whoIt)
     }, 60)
   }
   //general
