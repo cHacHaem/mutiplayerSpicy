@@ -52,22 +52,32 @@ socket.on("player tagged", (evt) => {
 
 // Function to handle tagging logic
 function tagPlayer(taggedPlayer) {
-  console.log("putting it on: ", taggedPlayer)
-  // Remove the marker from the current "it" player if there's already one tagged
-  if (whoIt && whoIt != playerId && document.getElementById("marker"+taggedPlayer)) {
-       document.getElementById("marker"+taggedPlayer).setAttribute("visible", "false")
-  }  else if(playerId != taggedPlayer) {
-    it.innerHTML = "Run Away!"
-    it.setAttribute("class", "notit")
+  console.log("putting it on: ", taggedPlayer);
+  
+  // Remove the marker from the current "it" player
+  if (whoIt && whoIt !== playerId) {
+    const currentMarker = document.getElementById("marker" + whoIt);
+    if (currentMarker) {
+      currentMarker.setAttribute("visible", "false");
+    }
+  }
+
+  // If the current player is not the one tagged
+  if (playerId !== taggedPlayer) {
+    it.innerHTML = "Run Away!";
+    it.setAttribute("class", "notit");
   }
 
   // If the current player is tagged
   if (playerId === taggedPlayer) {
-    it.innerHTML = "Your It!"
-    it.setAttribute("class", "it")
+    it.innerHTML = "You're It!";
+    it.setAttribute("class", "it");
   } else {
     // Ensure the tagged player exists in the game
-       if(document.getElementById("marker"+taggedPlayer)) document.getElementById("marker"+taggedPlayer).setAttribute("visible", "true")  // Add the marker to the tagged player
+    const newMarker = document.getElementById("marker" + taggedPlayer);
+    if (newMarker) {
+      newMarker.setAttribute("visible", "true");  // Add the marker to the tagged player
+    }
   }
 
   whoIt = taggedPlayer;  // Update who is "it"

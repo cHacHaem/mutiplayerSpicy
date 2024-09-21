@@ -66,12 +66,12 @@ io.on("connection", function (socket) {
     console.log(game)
   });
   //tag
-  function startTag() {
-    game[world].started = true;
-    socket.on("player tagged", (data) => {
+  socket.on("player tagged", (data) => {
         console.log("player tagged: ", data);
         socket.to(world).emit("player tagged", data);
       });
+  function startTag() {
+    game[world].started = true;
     let players = game[world].players;
   const randomIndex = Math.floor(Math.random() * players.length);
     game[world].whoIt = players[randomIndex]
