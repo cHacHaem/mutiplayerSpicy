@@ -8,7 +8,7 @@ var port = process.env.PORT || 3000;
 let chat = {};
 let game = {
   hub: { players: [] },
-  tag1: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
+  tag1: {  players: [], started: false, whoIt: "undecided", timeLeft: 30, timeToStart: 30, intervalStart: undefined },
   tag2: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
   tag3: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
 };
@@ -42,8 +42,16 @@ io.on("connection", function (socket) {
         socket.emit("world", world);
         game.tag1.players.push(playerId)
         console.log(game.tag1.players.length)
-        if(game.tag1.players.length > 1) {
+        if(game.tag1.players.length > 5) {
           startTag()
+        } else if(game.tag1.players.length > 1) {
+          let timeToStart = 20;
+          let gameStart = setInterval(() =>{
+            timeToStart--
+            if(timeToStart < 1 && game.tag1.players.length > 1) {
+              startTag()
+            }
+          }, 1000)
         }
       } else if (!game.tag2.started) {
         world = "tag2";
@@ -72,7 +80,7 @@ io.on("connection", function (socket) {
       });
   function startTag() {
     game[world].started = true;
-    game[world].timeLeft = 30;
+    game[world].timeLeft = 60;
     let players = game[world].players;
   const randomIndex = Math.floor(Math.random() * players.length);
     game[world].whoIt = players[randomIndex];
