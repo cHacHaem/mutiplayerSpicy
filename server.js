@@ -8,9 +8,9 @@ var port = process.env.PORT || 3000;
 let chat = {};
 let game = {
   hub: { players: [] },
-  tag1: {  players: [], started: false, whoIt: "undecided" },
-  tag2: {  players: [], started: false, whoIt: "undecided" },
-  tag3: {  players: [], started: false, whoIt: "undecided" },
+  tag1: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
+  tag2: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
+  tag3: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
 };
 try {
   const data = fs.readFileSync("chat.json");
@@ -72,10 +72,20 @@ io.on("connection", function (socket) {
       });
   function startTag() {
     game[world].started = true;
+    game[world].timeLeft = 60;
     let players = game[world].players;
   const randomIndex = Math.floor(Math.random() * players.length);
-    game[world].whoIt = players[randomIndex]
-    io.to(world).emit("game start", players[randomIndex]) 
+    game[world].whoIt = players[randomIndex];
+    io.to(world).emit("game start", players[randomIndex]);
+    let gameTimer = setInterval(() => {
+  game[world].timeLeft--
+      io.to(world).emit("time left", game[world].timeLeft)
+  if (game[world].timeLeft < 1) {
+    clearInterval(gameTimer);
+    console.log("game ", world, " is over.");
+    io.to(world).
+  }
+}, 1000);
   }
   //general
   socket.on("chat message", function (data) {

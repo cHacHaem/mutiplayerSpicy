@@ -27,7 +27,9 @@ function formatTime(seconds) {
 console.log(formatTime(60));  // Output: 1:00
 console.log(formatTime(75));  // Output: 1:15
 console.log(formatTime(45));  // Output: 0:45
-
+socket.on("time left", (left)=>{
+  timeLeftEl.innerHTML = formatTime(left)
+})
 player.addEventListener('collide', function (e) {
   if(gameStarted) {
     let otherDude = e.detail.body.el.id;
