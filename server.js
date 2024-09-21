@@ -8,6 +8,7 @@ var port = process.env.PORT || 3000;
 let chat = {};
 let game = {
   hub: { players: [] },
+  tag: [],
   tag1: {  players: [], started: false, whoIt: "undecided", timeLeft: 30, timeToStart: 30, intervalStart: undefined },
   tag2: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
   tag3: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
@@ -36,6 +37,9 @@ io.on("connection", function (socket) {
       world = "hub";
       socket.join(world);
     } else if (data.world == "tag") {
+      if(game.tag != []) {
+        
+      }
       if (!game.tag1.started) {
         world = "tag1";
         socket.join(world)
@@ -115,12 +119,20 @@ io.on("connection", function (socket) {
   });
 
   socket.on("disconnect", function (data) {
-    socket.to(world).emit("player left", playerId);
-    removeString(game[world].players, playerId)
-    game[world].started = false
-    game[world].whoIt = "undecided"
-    console.log(game)
-  });
+  socket.to(world).emit("player left", playerId);
+
+  // Check if 'game[world]' exists before accessing 'players'
+  if (game[world]) {
+    removeString(game[world].players, playerId);
+    game[world].started = false;
+    game[world].whoIt = "undecided";
+  } else {
+    console.log(`Game world ${world} not defined.`);
+  }
+
+  console.log(game); 
+});
+
 });
 function removeString(ary, str) {
   let index;
