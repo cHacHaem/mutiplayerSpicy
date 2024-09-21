@@ -72,7 +72,7 @@ io.on("connection", function (socket) {
       });
   function startTag() {
     game[world].started = true;
-    game[world].timeLeft = 60;
+    game[world].timeLeft = 30;
     let players = game[world].players;
   const randomIndex = Math.floor(Math.random() * players.length);
     game[world].whoIt = players[randomIndex];
@@ -83,7 +83,9 @@ io.on("connection", function (socket) {
   if (game[world].timeLeft < 1) {
     clearInterval(gameTimer);
     console.log("game ", world, " is over.");
-    io.to(world).
+    let winners = game[world].players;
+    removeString(winners, game[world].whoIt)
+    io.to(world).emit("game over", {winners: winners, loser: game[world].whoIt})
   }
 }, 1000);
   }
@@ -104,13 +106,16 @@ io.on("connection", function (socket) {
 
   socket.on("disconnect", function (data) {
     socket.to(world).emit("player left", playerId);
-    let index; 
-    if(game[world].players) index = game[world].players.indexOf(playerId); // Find the index of the string
-  if (index !== -1) { // Check if the string exists in the array
+    removeString(game[world].players, playerId)
     game[world].started = false
     game[world].whoIt = "undecided"
-    game[world].players.splice(index, 1); // Remove the string at the found index
-  }
     console.log(game)
   });
 });
+function removeString(ary, str) {
+  let index;
+  if(ary) index = ary.indexOf(str); // Find the index of the string
+  if (index !== -1) { // Check if the string exists in the array
+    ary.splice(index, 1); // Remove the string at the found index
+  }
+}
