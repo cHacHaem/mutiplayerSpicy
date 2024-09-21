@@ -45,11 +45,13 @@ io.on("connection", function (socket) {
         if(game.tag1.players.length > 5) {
           startTag()
         } else if(game.tag1.players.length > 1) {
-          let timeToStart = 20;
-          let gameStart = setInterval(() =>{
-            timeToStart--
-            if(timeToStart < 1 && game.tag1.players.length > 1) {
+          if(game[world].intervalStart) clearInterval(game[world].intervalStart)
+          game[world].intervalStart = setInterval(() =>{
+            io.to(world).emit("time to start", game[world].timeToStart)
+            game[world].timeToStart--
+            if(game[world].timeToStart < 1 && game.tag1.players.length > 1) {
               startTag()
+              clearInterval(game[world].intervalStart)
             }
           }, 1000)
         }

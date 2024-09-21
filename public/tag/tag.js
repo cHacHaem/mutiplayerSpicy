@@ -14,11 +14,14 @@ socket.on("game start", (itFirst)=>{
   }, 2000)
 })
 socket.on("world", (world)=>{
-  timeLeftEl.innerHTML ="world: " + world
+  it.innerHTML ="world: " + world
 })
-socket.on("game over", (game)=>[
+socket.on("game over", (game)=>{
   alert(game.winners + " won, and " + game.loser + " lost!")
-])
+})
+socket.on("time to start", (time)=>{
+  timeLeftEl.innerHTML = "Time To Start: " + formatTime(time)
+})
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
