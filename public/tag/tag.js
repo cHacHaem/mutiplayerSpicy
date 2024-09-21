@@ -47,13 +47,14 @@ player.addEventListener('collide', function (e) {
 
 socket.on("player tagged", (evt) => {
   tagPlayer(evt)
+  console.log("player tagged: ", evt)
 });
 
 // Function to handle tagging logic
 function tagPlayer(taggedPlayer) {
   console.log("putting it on: ", taggedPlayer)
   // Remove the marker from the current "it" player if there's already one tagged
-  if (whoIt && whoIt != playerId) {
+  if (whoIt && whoIt != playerId && document.getElementById("marker"+taggedPlayer)) {
        document.getElementById("marker"+taggedPlayer).setAttribute("visible", "false")
   }  else if(playerId != taggedPlayer) {
     it.innerHTML = "Run Away!"
