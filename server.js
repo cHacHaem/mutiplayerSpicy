@@ -8,7 +8,7 @@ var port = process.env.PORT || 3000;
 let chat = {};
 let game = {
   hub: { players: [] },
-  tag: [],
+  tag: {"hi": {  players: [], started: false, whoIt: "undecided", timeLeft: 30, timeToStart: 30, intervalStart: undefined }, "bye": {  players: [], started: false, whoIt: "undecided", timeLeft: 30, timeToStart: 30, intervalStart: undefined }},
   tag1: {  players: [], started: false, whoIt: "undecided", timeLeft: 30, timeToStart: 30, intervalStart: undefined },
   tag2: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
   tag3: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
@@ -37,8 +37,30 @@ io.on("connection", function (socket) {
       world = "hub";
       socket.join(world);
     } else if (data.world == "tag") {
-      if(game.tag != []) {
-        
+      if(game.tag != {}) {
+        Object.keys(game.tag).forEach((worldKey) => {
+    if (!game.tag[worldKey].started) {
+      world = worldKey;
+      console.log(worldKey)
+        //socket.join(world)
+        //socket.emit("world", world);
+        game.tag[worldKey].players.push(playerId)
+        console.log(game.tag1.players.length)
+        if(game.tag[worldKey].players.length > 5) {
+          startTag()
+        } else if(game.tag[worldKey].players.length > 1) {
+          if(game.tag[world].intervalStart) clearInterval(game[world].intervalStart)
+          game.tag[world].intervalStart = setInterval(() =>{
+            io.to(world).emit("time to start", game.tag[world].timeToStart)
+            game.tag[world].timeToStart--
+            if(game.tag[world].timeToStart < 1 && game.tag[worldKey].players.length > 1) {
+              startTag()
+              clearInterval(game.tag[world].intervalStart)
+            }
+          }, 1000)
+        }
+    }
+  });
       }
       if (!game.tag1.started) {
         world = "tag1";
