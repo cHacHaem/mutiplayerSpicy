@@ -77,8 +77,8 @@ io.on("connection", function (socket) {
     game[world].whoIt = players[randomIndex]
     io.to(world).emit("game start", players[randomIndex])
     setInterval(()=>{
-      socket.to(world).emit("player tagged", game.world.whoIt)
-    }, 60)
+      socket.to(world).emit("player tagged", game[world].whoIt)
+    }, 1)
   }
   //general
   socket.on("chat message", function (data) {
@@ -93,10 +93,9 @@ io.on("connection", function (socket) {
   socket.on("player update", function (data) {
     // we tell the client to execute 'new message'
     socket.to(world).emit("player update", data);
-    console.log(world)
   });
 
-  /*socket.on("disconnect", function (data) {
+  socket.on("disconnect", function (data) {
     socket.to(world).emit("player left", playerId);
     let index; 
     if(game[world].players) index = game[world].players.indexOf(playerId); // Find the index of the string
@@ -105,5 +104,5 @@ io.on("connection", function (socket) {
     game[world].players.splice(index, 1); // Remove the string at the found index
   }
     console.log(game)
-  });*/
+  });
 });
