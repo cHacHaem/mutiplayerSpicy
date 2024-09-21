@@ -38,8 +38,10 @@ io.on("connection", function (socket) {
       socket.join(world);
     } else if (data.world == "tag") {
       if(game.tag != {}) {
+        let worldFound = false;
         Object.keys(game.tag).forEach((worldKey) => {
-    if (!game.tag[worldKey].started) {
+    if (!game.tag[worldKey].started && !worldFound) {
+      worldFound = true
       world = worldKey;
       console.log(worldKey)
         //socket.join(world)
