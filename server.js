@@ -1,4 +1,4 @@
-// Setup basic express server
+//good origonal 
 var express = require("express");
 var fs = require("fs");
 var app = express();
@@ -31,78 +31,55 @@ io.on("connection", function (socket) {
   let world;
   let playerId;
   //room sort and world connection
-  socket.on("world", (data) => {
-    playerId = data.id;
-    if (data.world == "hub") {
-      world = "hub";
-      socket.join(world);
-    } else if (data.world == "tag") {
-      if(game.tag != {}) {
-        let worldFound = false;
-        Object.keys(game.tag).forEach((worldKey) => {
-    if (!game.tag[worldKey].started && !worldFound) {
-      worldFound = true
-      world = worldKey;
-      console.log(worldKey)
-        //socket.join(world)
-        //socket.emit("world", world);
-        game.tag[worldKey].players.push(playerId)
-        console.log(game.tag1.players.length)
-        if(game.tag[worldKey].players.length > 5) {
-          startTag()
-        } else if(game.tag[worldKey].players.length > 1) {
-          if(game.tag[world].intervalStart) clearInterval(game[world].intervalStart)
-          game.tag[world].intervalStart = setInterval(() =>{
-            io.to(world).emit("time to start", game.tag[world].timeToStart)
-            game.tag[world].timeToStart--
-            if(game.tag[world].timeToStart < 1 && game.tag[worldKey].players.length > 1) {
-              startTag()
-              clearInterval(game.tag[world].intervalStart)
-            }
-          }, 1000)
-        }
-    }
-  });
-      }
-      if (!game.tag1.started) {
-        world = "tag1";
-        socket.join(world)
-        socket.emit("world", world);
-        game.tag1.players.push(playerId)
-        console.log(game.tag1.players.length)
-        if(game.tag1.players.length > 5) {
-          startTag()
-        } else if(game.tag1.players.length > 1) {
-          if(game[world].intervalStart) clearInterval(game[world].intervalStart)
-          game[world].intervalStart = setInterval(() =>{
-            io.to(world).emit("time to start", game[world].timeToStart)
-            game[world].timeToStart--
-            if(game[world].timeToStart < 1 && game.tag1.players.length > 1) {
-              startTag()
-              clearInterval(game[world].intervalStart)
-            }
-          }, 1000)
-        }
-      } else if (!game.tag2.started) {
-        world = "tag2";
+ socket.on("world", (data) => {
+  playerId = data.id;
+
+  if (data.world == "hub") {
+    world = "hub";
+    socket.join(world);
+  } else if (data.world == "tag") {
+    let worldFound = false;
+
+    // Look for the first available tag room that hasn't started yet
+    Object.keys(game.tag).forEach((worldKey) => {
+      if (!game.tag[worldKey].started && !worldFound) {
+        worldFound = true;
+        world = worldKey;
+
+        // Make the player join the room
         socket.join(world);
-        socket.emit("world", world)
-        game.tag2.players.push(playerId)
-        if(game.tag2.players.length > 1) {
-          startTag()
-        }
-      } else if (!game.tag3.started) {
-        world = "tag3";
-        socket.join(world);
-        socket.emit("world", world)
-        game.tag3.players.push(playerId)
-        if(game.tag3.players.length > 1) {
-          startTag()
+        socket.emit("world", world);  // Send the world info to the player
+
+        // Add the player to the players array
+        game.tag[worldKey].players.push(playerId);
+
+        console.log(game.tag[worldKey].players.length);
+
+        // Handle game start logic based on the number of players
+        if (game.tag[worldKey].players.length > 5) {
+          startTag();
+        } else if (game.tag[worldKey].players.length > 1) {
+          if (game.tag[world].intervalStart) clearInterval(game[world].intervalStart);
+          game.tag[world].intervalStart = setInterval(() => {
+            io.to(world).emit("time to start", game.tag[world].timeToStart);
+            game.tag[world].timeToStart--;
+            if (game.tag[world].timeToStart < 1 && game.tag[worldKey].players.length > 1) {
+              startTag();
+              clearInterval(game.tag[world].intervalStart);
+            }
+          }, 1000);
         }
       }
+    });
+
+    // Fallback for if no world was found (optional)
+    if (!worldFound) {
+      console.log("No available tag rooms.");
     }
-    console.log(game)
-  });
+  }
+  console.log(game);
+});
+
   //tag
   socket.on("player tagged", (data) => {
         console.log("player tagged: ", data);
@@ -150,6 +127,10 @@ io.on("connection", function (socket) {
     removeString(game[world].players, playerId);
     game[world].started = false;
     game[world].whoIt = "undecided";
+  } else if(game.tag[world]) {
+    removeString(game.tag[world].players, playerId);
+    game.tag[world].started = false;
+    game.tag[world].whoIt = "undecided";
   } else {
     console.log(`Game world ${world} not defined.`);
   }
