@@ -34,7 +34,7 @@ io.on("connection", function (socket) {
   //room sort and world connection
  socket.on("world", (data) => {
   playerId = data.id;
-
+  playerName = data.name;
   if (data.world == "hub") {
     world = "hub";
     socket.join(world);

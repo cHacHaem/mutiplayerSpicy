@@ -28,7 +28,7 @@ socket.on("player left", (evt) => {
   }
 });
 
-socket.emit("world", { world: "tag", id: playerId });
+socket.emit("world", { world: "tag", id: playerId, name: name });
 
 if (localStorage.getItem('name')) {
   name = localStorage.getItem('name');
