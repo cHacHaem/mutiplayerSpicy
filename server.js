@@ -8,11 +8,12 @@ var port = process.env.PORT || 3000;
 let chat = {};
 let game = {
   hub: { players: [] },
-  tag: {"hi": {  players: [], started: false, whoIt: "undecided", timeLeft: 30, timeToStart: 30, intervalStart: undefined }, "bye": {  players: [], started: false, whoIt: "undecided", timeLeft: 30, timeToStart: 30, intervalStart: undefined }},
+  tag: {},
   tag1: {  players: [], started: false, whoIt: "undecided", timeLeft: 30, timeToStart: 30, intervalStart: undefined },
   tag2: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
   tag3: {  players: [], started: false, whoIt: "undecided", timeLeft: 30 },
 };
+let idToName = {};
 try {
   const data = fs.readFileSync("chat.json");
   chat = JSON.parse(data) || {};
@@ -40,20 +41,46 @@ io.on("connection", function (socket) {
     socket.join(world);
   } else if (data.world == "tag") {
     function joinTag() {
-      
-    }
-    if(game.tag != {}) {
+       socket.join(world);
+        socket.emit("world", world);  // Send the world info to the player
+
+        // Add the player to the players array
+        game.tag[world].players.push(playerId);
+
+        console.log(game.tag[world].players.length);
+        io.to(world).emit("time to start", "waiting for players...",)
+        // Handle game start logic based on the number of players
+        if (game.tag[world].players.length > 3) {
+          startTag();
+          clearInterval(game.tag[world].intervalStart);
+        } else if (game.tag[world].players.length > 1) {
+          if (game.tag[world].intervalStart) clearInterval(game.tag[world].intervalStart);
+          game.tag[world].timeToStart = 30;
+          game.tag[world].intervalStart = setInterval(() => {
+            io.to(world).emit("time to start", game.tag[world].timeToStart);
+            game.tag[world].timeToStart--;
+            if (game.tag[world].timeToStart < 1 && game.tag[world].players.length > 1) {
+              startTag();
+              clearInterval(game.tag[world].intervalStart);
+            }
+          }, 1000);
+        }
+    } 
+    if(Object.keys(game.tag).length > 0) {
       let worldFound = false;
        // Look for the first available tag room that hasn't started yet
     Object.keys(game.tag).forEach((worldKey) => {
       if (!game.tag[worldKey].started && !worldFound) {
         worldFound = true;
         world = worldKey;
-
+        joinTag()
+      }
     }); 
     } else {
+      console.log("making world")
       world = "tag-"+generateRandomString(5);
       game.tag[world] = {  players: [], started: false, whoIt: "undecided", timeLeft: 30, timeToStart: 30, intervalStart: undefined };
+      joinTag()
     }
 
     // Fallback for if no world was found (optional)
