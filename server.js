@@ -86,21 +86,21 @@ io.on("connection", function (socket) {
         socket.to(world).emit("player tagged", data);
       });
   function startTag() {
-    game[world].started = true;
-    game[world].timeLeft = 60;
-    let players = game[world].players;
+    game.tag[world].started = true;
+    game.tag[world].timeLeft = 60;
+    let players = game.tag[world].players;
   const randomIndex = Math.floor(Math.random() * players.length);
-    game[world].whoIt = players[randomIndex];
+    game.tag[world].whoIt = players[randomIndex];
     io.to(world).emit("game start", players[randomIndex]);
     let gameTimer = setInterval(() => {
-  game[world].timeLeft--
+  game.tag[world].timeLeft--
       io.to(world).emit("time left", game[world].timeLeft)
   if (game[world].timeLeft < 1) {
     clearInterval(gameTimer);
     console.log("game ", world, " is over.");
     let winners = game[world].players;
-    removeString(winners, game[world].whoIt)
-    io.to(world).emit("game over", {winners: winners, loser: game[world].whoIt})
+    removeString(winners, game.tag[world].whoIt)
+    io.to(world).emit("game over", {winners: winners, loser: game.tag[world].whoIt})
   }
 }, 1000);
   }
