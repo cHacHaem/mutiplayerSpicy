@@ -97,7 +97,7 @@ io.on("connection", function (socket) {
     let gameTimer = setInterval(() => {
   game.tag[world].timeLeft--
       io.to(world).emit("time left", game.tag[world].timeLeft)
-  if (game[world].timeLeft < 1) {
+  if (game.tag[world].timeLeft < 1) {
     clearInterval(gameTimer);
     console.log("game ", world, " is over.");
     let winners = game.tag[world].players;
