@@ -36,6 +36,7 @@ io.on("connection", function (socket) {
  socket.on("world", (data) => {
   playerId = data.id;
   playerName = data.name;
+  idToName[playerId] = playerName;
   if (data.world == "hub") {
     world = "hub";
     socket.join(world);
@@ -73,7 +74,7 @@ io.on("connection", function (socket) {
       if (!game.tag[worldKey].started && !worldFound) {
         worldFound = true;
         world = worldKey;
-        joinTag()
+        joinTag();
       }
     }); 
     } else {
@@ -93,6 +94,7 @@ io.on("connection", function (socket) {
         console.log("player tagged: ", data);
         socket.to(world).emit("player tagged", data);
         game.tag[world].whoIt = data;
+        io.to(world).emit("chat message", { message: idToName[data]+" was tagged!", id: "server", name: "server" })
       });
   function startTag() {
     game.tag[world].started = true;
@@ -109,7 +111,11 @@ io.on("connection", function (socket) {
     console.log("game ", world, " is over.");
     let winners = game.tag[world].players;
     removeString(winners, game.tag[world].whoIt)
-    io.to(world).emit("game over", {winners: winners, loser: game.tag[world].whoIt})
+    winners.forEach((winId)=>{
+      winners.push(idToName[winId]);
+      removeString(winners, winId);
+    })
+    io.to(world).emit("game over", {winners: winners, loser: idToName[game.tag[world].whoIt]})
   }
 }, 1000);
   }
