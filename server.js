@@ -39,45 +39,24 @@ io.on("connection", function (socket) {
     world = "hub";
     socket.join(world);
   } else if (data.world == "tag") {
-    let worldFound = false;
-
-    // Look for the first available tag room that hasn't started yet
+    function joinTag() {
+      
+    }
+    if(game.tag != {}) {
+      let worldFound = false;
+       // Look for the first available tag room that hasn't started yet
     Object.keys(game.tag).forEach((worldKey) => {
       if (!game.tag[worldKey].started && !worldFound) {
         worldFound = true;
         world = worldKey;
 
-        // Make the player join the room
-        socket.join(world);
-        socket.emit("world", world);  // Send the world info to the player
-
-        // Add the player to the players array
-        game.tag[worldKey].players.push(playerId);
-
-        console.log(game.tag[worldKey].players.length);
-        io.to(world).emit("time to start", "waiting for players...",)
-        // Handle game start logic based on the number of players
-        if (game.tag[worldKey].players.length > 5) {
-          startTag();
-        } else if (game.tag[worldKey].players.length > 1) {
-          if (game.tag[world].intervalStart) clearInterval(game.tag[world].intervalStart);
-          game.tag[world].timeToStart = 30;
-          game.tag[world].intervalStart = setInterval(() => {
-            io.to(world).emit("time to start", game.tag[world].timeToStart);
-            game.tag[world].timeToStart--;
-            if (game.tag[world].timeToStart < 1 && game.tag[worldKey].players.length > 1) {
-              startTag();
-              clearInterval(game.tag[world].intervalStart);
-            }
-          }, 1000);
-        }
-      }
-    });
+    }); 
+    } else {
+      world = "tag-"+generateRandomString(5);
+      game.tag[world] = {  players: [], started: false, whoIt: "undecided", timeLeft: 30, timeToStart: 30, intervalStart: undefined };
+    }
 
     // Fallback for if no world was found (optional)
-    if (!worldFound) {
-      console.log("No available tag rooms.");
-    }
   }
   console.log(game);
 });
@@ -86,6 +65,7 @@ io.on("connection", function (socket) {
   socket.on("player tagged", (data) => {
         console.log("player tagged: ", data);
         socket.to(world).emit("player tagged", data);
+        game.tag[world].whoIt = data;
       });
   function startTag() {
     game.tag[world].started = true;
@@ -147,4 +127,12 @@ function removeString(ary, str) {
   if (index !== -1) { // Check if the string exists in the array
     ary.splice(index, 1); // Remove the string at the found index
   }
+}
+function generateRandomString(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
 }
