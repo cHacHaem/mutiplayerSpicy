@@ -20,7 +20,11 @@ socket.on("game over", (game)=>{
   alert(game.winners + " won, and " + game.loser + " lost!")
 })
 socket.on("time to start", (time)=>{
-  timeLeftEl.innerHTML = "Time To Start: " + formatTime(time)
+  if(time == "waiting for players...") {
+    timeLeftEl.innerHTML = time;
+  } else {
+    timeLeftEl.innerHTML = "Time To Start: " + formatTime(time)
+  }
 })
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);

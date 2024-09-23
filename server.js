@@ -30,6 +30,7 @@ app.use(express.static("public"));
 io.on("connection", function (socket) {
   let world;
   let playerId;
+  let playerName;
   //room sort and world connection
  socket.on("world", (data) => {
   playerId = data.id;
@@ -54,7 +55,7 @@ io.on("connection", function (socket) {
         game.tag[worldKey].players.push(playerId);
 
         console.log(game.tag[worldKey].players.length);
-
+        io.to(world).emit("time to start", "waiting for players...",)
         // Handle game start logic based on the number of players
         if (game.tag[worldKey].players.length > 5) {
           startTag();
@@ -95,11 +96,11 @@ io.on("connection", function (socket) {
     io.to(world).emit("game start", players[randomIndex]);
     let gameTimer = setInterval(() => {
   game.tag[world].timeLeft--
-      io.to(world).emit("time left", game[world].timeLeft)
+      io.to(world).emit("time left", game.tag[world].timeLeft)
   if (game[world].timeLeft < 1) {
     clearInterval(gameTimer);
     console.log("game ", world, " is over.");
-    let winners = game[world].players;
+    let winners = game.tag[world].players;
     removeString(winners, game.tag[world].whoIt)
     io.to(world).emit("game over", {winners: winners, loser: game.tag[world].whoIt})
   }
