@@ -28,7 +28,7 @@ server.listen(port, function () {
 app.use(express.static("public"));
 app.post('/save-scene', (req, res) => {
   const sceneData = req.body.scene;
-  
+  console.log(sceneData)
   // Save to the Glitch project (e.g., index.html or a specific A-Frame file)
   fs.writeFileSync(__dirname + '/public/tag/index.html', sceneData, 'utf8');
   res.send({ status: 'success' });
