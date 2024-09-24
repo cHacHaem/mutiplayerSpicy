@@ -147,6 +147,7 @@ io.on("connection", function (socket) {
     removeString(game.tag[world].players, playerId);
     game.tag[world].started = false;
     game.tag[world].whoIt = "undecided";
+    if(game.tag[world].players.length < 1) delete game.tag[world] 
   } else {
     console.log(`Game world ${world} not defined.`);
   }
