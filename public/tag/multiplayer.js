@@ -28,15 +28,13 @@ socket.on("player left", (evt) => {
   }
 });
 
-socket.emit("world", { world: "tag", id: playerId, name: name });
-
 if (localStorage.getItem('name')) {
   name = localStorage.getItem('name');
 } else {
   name = prompt("What is your player name?");
   localStorage.setItem("name", name);
 }
-
+socket.emit("world", { world: "tag", id: playerId, name: name });
 function sendUpdate() {
   if (player.body && player.body.velocity) {
     const position = player.getAttribute("position");
