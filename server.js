@@ -58,11 +58,13 @@ io.on("connection", function (socket) {
           if (game.tag[world].intervalStart) clearInterval(game.tag[world].intervalStart);
           game.tag[world].timeToStart = 30;
           game.tag[world].intervalStart = setInterval(() => {
-            io.to(world).emit("time to start", game.tag[world].timeToStart);
+            if(game.tag[world]) {
+              io.to(world).emit("time to start", game.tag[world].timeToStart);
             game.tag[world].timeToStart--;
             if (game.tag[world].timeToStart < 1 && game.tag[world].players.length > 1) {
               startTag();
               clearInterval(game.tag[world].intervalStart);
+            }
             }
           }, 1000);
         }
