@@ -169,9 +169,11 @@
   // Hook to save scene changes
     setInterval(()=>{
       if (AFRAME.INSPECTOR) {
+        console.log(AFRAME.INSPECTOR.sceneEl.outerHTML)
   AFRAME.INSPECTOR.on('sceneModified', function () {
     var sceneData = AFRAME.INSPECTOR.sceneEl.outerHTML;
     // Send the updated scene to the server
+    console.log(sceneData)
     fetch('/save-scene', {
       method: 'POST',
       headers: {
@@ -183,7 +185,7 @@
     });
   });
 } else {
-  console.error('A-Frame Inspector is not available');
+  console.log('A-Frame Inspector is not available');
 }
     }, 1000)
 
