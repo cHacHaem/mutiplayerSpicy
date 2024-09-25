@@ -167,7 +167,8 @@
   <script src="/tag/tag.js"></script>
   <script>
   // Hook to save scene changes
-if (AFRAME.INSPECTOR) {
+    setInterval(()=>{
+      if (AFRAME.INSPECTOR) {
   AFRAME.INSPECTOR.on('sceneModified', function () {
     var sceneData = AFRAME.INSPECTOR.sceneEl.outerHTML;
     // Send the updated scene to the server
@@ -184,6 +185,7 @@ if (AFRAME.INSPECTOR) {
 } else {
   console.error('A-Frame Inspector is not available');
 }
+    }, 1000)
 
   </script>
 </body>
