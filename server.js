@@ -99,10 +99,12 @@ io.on("connection", function (socket) {
 
   //tag
   socket.on("player tagged", (data) => {
-        console.log("player tagged: ", data);
+        if(game.tag[world].started) {
+          console.log("player tagged: ", data);
         socket.to(world).emit("player tagged", data);
         game.tag[world].whoIt = data;
         io.to(world).emit("chat message", { message: idToName[data]+" was tagged!", id: "server", name: "server" })
+        }
       });
   function startTag() {
     game.tag[world].started = true;
