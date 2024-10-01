@@ -125,6 +125,7 @@ io.on("connection", function (socket) {
       winners.push(idToName[winId]);
       removeString(winners, winId);
     })
+    io.to(world).emit("game over")
     io.to(world).emit("chat message", {message: winners +" won! And "+idToName[game.tag[world].whoIt]+" lost!"})
    delete game.tag[world]
   }

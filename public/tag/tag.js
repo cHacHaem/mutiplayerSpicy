@@ -17,7 +17,10 @@ socket.on("world", (world)=>{
   it.innerHTML ="world: " + world
 })
 socket.on("game over", (game)=>{
-  alert(game.winners + " won, and " + game.loser + " lost!")
+  gameStarted = false;
+  timeLeftEl.innerHTML = "";
+  it.setAttribute("class", "it");
+  it.innerHTML = "Game Over";
 })
 socket.on("time to start", (time)=>{
   if(time == "waiting for players...") {
