@@ -7,7 +7,6 @@ let scene = document.querySelector("a-scene");
 let players = {};
 let name;
 let smoothness = 0.1; // Adjust this value to control how smooth the movement is
-
 // Ensure player physics component is initialized
 function checkPlayerBody() {
   if (!player || !player.body) {
