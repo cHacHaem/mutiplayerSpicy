@@ -125,10 +125,13 @@
   <a-scene physics="debug: true; defaultContactMaterial: {friction: 5, restitution: 0.3}">
     <a-assets>
       <a-asset-item id="playerSkin" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/Sweatshirt.glb?v=1725725228968"></a-asset-item>
-  <a-asset-item id="tree" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/tree.glb?v=1725820185520"></a-asset-item>
+  <a-asset-item id="treeModel" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/tree.glb?v=1725820185520"></a-asset-item>
 <a-asset-item id="rock" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/rock.glb?v=1725830236499"></a-asset-item>
 <a-asset-item id="arrow" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/arrow.glb?v=1726321834583"></a-asset-item>
+      <a-asset-item id="treeHouseClosed" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/treeHouseClosed.glb?v=1727827441968"></a-asset-item>
       <img id="ground" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/ground.001.png?v=1725831593424">
+    <a-mixin gltf-model="#treeHouseClosed"></a-mixin>
+        <a-mixin id="tree" gltf-model="#treeModel" position="0 0 5" static-body="shape: none; sphereRadius: NaN" shape__trunk="shape: cylinder; offset: 0 2.5 0; height: 5" shape__leaves="shape: sphere; offset: 0 6.3 0; radius: 2"  velocity=""></a-mixin>
     </a-assets>
     <a-sky color="lightblue"></a-sky>
     <a-sphere id="player" position="0 5 0" visible="false">
@@ -140,8 +143,7 @@
       <a-box position="0 0 100" scale="200 100 2" static-body visible="false"></a-box>
       <a-box position="0 0 -100" scale="200 100 2" static-body visible="false"></a-box>
       <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -0.5 0" width="200" height="1" depth="200"></a-box>
-    <a-gltf-model src="#tree" position="0 0 5" static-body="shape: none; sphereRadius: NaN" shape__trunk="shape: cylinder; offset: 0 2.5 0; height: 5" shape__leaves="shape: sphere; offset: 0 6.3 0; radius: 2" gltf-model="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/tree.glb?v=1725820185520" velocity=""></a-gltf-model>
-      <a-gltf-model src="#tree" position="14.59856 0 -13.87111" static-body="shape: none; sphereRadius: NaN" shape__trunk="shape: cylinder; offset: 0 2.5 0; height: 5" shape__leaves="shape: sphere; offset: 0 6.3 0; radius: 2" gltf-model="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/tree.glb?v=1725820185520" velocity=""></a-gltf-model>
+    <a-entity mixin="tree" position="5 0 0"></a-entity>
       <a-gltf-model src="#rock" position=" 3 0 0" static-body="shape: none" shape__mm="shape: sphere; radius: 1; offset: 1 0.5 0" shape__yeah="shape: sphere; radius: 1; offset: -0.1 0.5 -0.8"></a-gltf-model>
       <a-link href="/" title="hello" position="0 2 0" scale="2 2 2"></a-link>
       <a-box static-body></a-box>
