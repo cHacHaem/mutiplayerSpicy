@@ -72,7 +72,7 @@ AFRAME.registerComponent('player-controls', {
       force.z -= cameraWorldDirection.x * forceAmount;
     }
     if (this.keys[' '] && this.touchingGround) { // Spacebar for jump
-      force.y += forceAmount * 10;
+      force.y += forceAmount * 20;
       this.touchingGround = false; // Reset touchingGround until player lands again
     }
 
