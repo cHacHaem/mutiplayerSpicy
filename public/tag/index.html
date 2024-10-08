@@ -196,30 +196,5 @@
   <script src="/spawn.js"></script>
   <script src="/chat.js"></script>
   <script src="/tag/tag.js"></script>
-  <script>
-  // Hook to save scene changes
-    setInterval(()=>{
-      if (AFRAME.INSPECTOR) {
-        console.log(AFRAME.INSPECTOR.sceneEl.outerHTML)
-  AFRAME.INSPECTOR.on('sceneModified', function () {
-    var sceneData = AFRAME.INSPECTOR.sceneEl.outerHTML;
-    // Send the updated scene to the server
-    console.log(sceneData)
-    fetch('/save-scene', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ scene: sceneData })
-    }).then(res => {
-      console.log('Scene saved');
-    });
-  });
-} else {
-  console.log('A-Frame Inspector is not available');
-}
-    }, 1000)
-
-  </script>
 </body>
 </html>
