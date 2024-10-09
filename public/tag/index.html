@@ -146,29 +146,34 @@
       <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -0.5 0" width="200" height="1" depth="200"></a-box>
     <a-entity mixin="treeHouse"></a-entity>
     </a-entity>
+    <a-entity gltf-model="#treeHouseClosed" generate-physics-shapes static-body="shape: none" position="10 0 0"></a-entity>
     <script>
     AFRAME.registerComponent('generate-physics-shapes', {
   init: function () {
     const el = this.el;
-    const model = el.getObject3D('mesh');
     
-    if (model) {
-      model.traverse(function (node) {
-        if (node.isMesh) {
-          // You can access node.geometry here
-          // Create shapes based on bounding box of each mesh part
-          const bbox = new THREE.Box3().setFromObject(node);
-          const size = bbox.getSize(new THREE.Vector3());
-          const offset = bbox.getCenter(new THREE.Vector3());
+    // Listen for the model to load
+    el.addEventListener('model-loaded', () => {
+      const model = el.getObject3D('mesh');
+      
+      if (model) {
+        model.traverse(function (node) {
+          if (node.isMesh) {
+            // You can access node.geometry here
+            // Create shapes based on bounding box of each mesh part
+            const bbox = new THREE.Box3().setFromObject(node);
+            const size = bbox.getSize(new THREE.Vector3());
+            const offset = bbox.getCenter(new THREE.Vector3());
 
-          el.setAttribute(`shape__${node.name}`, {
-            shape: 'box',
-            halfExtents: `${size.x / 2} ${size.y / 2} ${size.z / 2}`,
-            offset: `${offset.x} ${offset.y} ${offset.z}`
-          });
-        }
-      });
-    }
+            el.setAttribute(`shape__${node.name}`, {
+              shape: 'box',
+              halfExtents: `${size.x / 2} ${size.y / 2} ${size.z / 2}`,
+              offset: `${offset.x} ${offset.y} ${offset.z}`
+            });
+          }
+        });
+      }
+    });
   }
 });
 </script>
