@@ -148,7 +148,7 @@
     </a-entity>
     <a-entity gltf-model="#treeHouseClosed" generate-physics-shapes static-body="shape: none" position="10 0 0"></a-entity>
     <script>
-    AFRAME.registerComponent('generate-physics-shapes', {
+AFRAME.registerComponent('generate-physics-shapes', {
   init: function () {
     const el = this.el;
     
@@ -159,17 +159,36 @@
       if (model) {
         model.traverse(function (node) {
           if (node.isMesh) {
-            // You can access node.geometry here
-            // Create shapes based on bounding box of each mesh part
-            const bbox = new THREE.Box3().setFromObject(node);
-            const size = bbox.getSize(new THREE.Vector3());
-            const offset = bbox.getCenter(new THREE.Vector3());
+            // Get geometry vertices for convex hull
+            const geometry = node.geometry;
+            const vertices = geometry.attributes.position.array;
 
-            el.setAttribute(`shape__${node.name}`, {
-              shape: 'box',
-              halfExtents: `${size.x / 2} ${size.y / 2} ${size.z / 2}`,
-              offset: `${offset.x} ${offset.y} ${offset.z}`
-            });
+            // Generate convex hull geometry
+            const convexHull = new THREE.ConvexGeometry(vertices);
+
+            // Split convex hull vertices into smaller sets to create bounding boxes
+            const groupSize = Math.ceil(convexHull.attributes.position.count / 5); // Split into 5 groups
+            for (let i = 0; i < 5; i++) {
+              const start = i * groupSize;
+              const end = Math.min(start + groupSize, convexHull.attributes.position.count);
+
+              const subsetVertices = [];
+              for (let j = start; j < end; j++) {
+                subsetVertices.push(convexHull.attributes.position.array.slice(j * 3, j * 3 + 3));
+              }
+
+              // Compute bounding box for each subset of vertices
+              const bbox = new THREE.Box3().setFromPoints(subsetVertices.map(v => new THREE.Vector3(v[0], v[1], v[2])));
+              const size = bbox.getSize(new THREE.Vector3());
+              const offset = bbox.getCenter(new THREE.Vector3());
+
+              // Add a bounding box shape for this part
+              el.setAttribute(`shape__${node.name}_${i}`, {
+                shape: 'box',
+                halfExtents: `${size.x / 2} ${size.y / 2} ${size.z / 2}`,
+                offset: `${offset.x} ${offset.y} ${offset.z}`
+              });
+            }
           }
         });
       }
