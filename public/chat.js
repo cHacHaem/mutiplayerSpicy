@@ -52,4 +52,8 @@ function showMessage(message) {
     newMes.appendChild(newMesPerson);
     newMes.appendChild(newMesText);
     chatContent.appendChild(newMes)
+ // Or whatever method to get the element, again
+
+// To set the scroll
+chatContent.scrollTo(0, 1000000000000000);
 }
