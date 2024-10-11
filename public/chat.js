@@ -55,5 +55,5 @@ function showMessage(message) {
  // Or whatever method to get the element, again
 
 // To set the scroll
-chatContent.scrollTo(0, 1000000000000000);
+chatContent.scrollTo(chatContent.height, chatContent.scrollHeight);
 }
