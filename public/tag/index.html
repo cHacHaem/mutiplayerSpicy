@@ -141,14 +141,15 @@
       <a-camera position="0 1.6 0" look-controls="pointerLockEnabled: true" wasd-controls="enabled: false" id="cam"></a-camera>
     </a-sphere>
     <a-entity id="map">
-      <a-box position="100 0 0" scale="2 100 200" static-body visible="false"></a-box>a
-      <a-box position="-100 0 0" scale="2 100 200" static-body visible="false"></a-box>
-      <a-box position="0 0 100" scale="200 100 2" static-body visible="false"></a-box>
-      <a-box position="0 0 -100" scale="200 100 2" static-body visible="false"></a-box>
-      <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -0.5 0" width="200" height="1" depth="200"></a-box>
+      <a-box position="50 0 0" scale="2 50 100" static-body visible="false"></a-box>a
+      <a-box position="-50 0 0" scale="2 50 100" static-body visible="false"></a-box>
+      <a-box position="0 0 50" scale="100 50 2" static-body visible="false"></a-box>
+      <a-box position="0 0 -50" scale="100 50 2" static-body visible="false"></a-box>
+      <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -0.5 0" width="100" height="1" depth="100"></a-box>
     <a-entity mixin="treeHouse"></a-entity>
-      <a-entity tree></a-entity>
+      <a-entity mixin="tree"></a-entity>
       <a-entity mixin="treeHouseBridge" position="20 0 0"></a-entity>
+      
     </a-entity>
      <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r153/examples/js/math/ConvexHull.js"></script>
 
