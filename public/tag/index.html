@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8">
   <link rel="icon" href="https://glitch.com/favicon.ico">
-
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <title>Multispace</title>
   <style>
     body, html {
@@ -151,7 +154,8 @@
       <a-entity mixin="tree" position="-40 0 -35" scale="2 2 2"></a-entity>
       <a-entity mixin="rock"></a-entity>
     </a-entity>
-     
+     <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r153/examples/js/math/ConvexHull.js"></script>
+
     <script src="/shape.js"></script>
   </a-scene>
 <div class="gameinfo">
@@ -171,20 +175,11 @@
       <input type="text" id="chat-input" placeholder="Type a message...">
     </div>
   </div>
-   
-</body>
-</html>
-<script src="/tag/multiplayer.js"></script>
+   <script src="/tag/multiplayer.js"></script>
   <script src="/movement.js"></script>
   <script src="/animation.js"></script>
   <script src="/spawn.js"></script>
   <script src="/chat.js"></script>
   <script src="/tag/tag.js"></script>
-
-<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r153/examples/js/math/ConvexHull.js"></script>
-
-
-<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-  <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
+</body>
+</html>
