@@ -146,13 +146,14 @@
       <a-box position="0 0 50" scale="100 50 2" static-body visible="false"></a-box>
       <a-box position="0 0 -50" scale="100 50 2" static-body visible="false"></a-box>
       <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -0.5 0" width="100" height="1" depth="100"></a-box>
-    <a-entity mixin="treeHouse" position="10 0 0"></a-entity>
+    <a-entity mixin="treeHouse" position="-10 0 20" rotation="0 57 0"></a-entity>
       <a-entity mixin="tree"></a-entity>
       <a-entity mixin="treeHouseBridge" position="4 0 35"></a-entity>
       <a-entity mixin="treeHouseBridge" position="25 0 10" rotation="0 90 0"></a-entity>
        <a-entity mixin="treeHouseBridge" position="-30 0 -10" rotation="0 45 0"></a-entity>
       <a-entity mixin="tree" position="-40 0 -35" scale="2 2 2"></a-entity>
-      <a-entity mixin="treeHouse" position="40 0 40"></a-entity>
+      <a-entity mixin="tree" position="-45 0 -37" scale="2 3 2"></a-entity>
+      <a-entity mixin="treeHouse" position="-35 0 35" rotation="0 -32 0c"></a-entity>
       <a-entity mixin="rock"></a-entity>
     </a-entity>
      <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r153/examples/js/math/ConvexHull.js"></script>
@@ -160,7 +161,7 @@
     <script src="/shape.js"></script>
   </a-scene>
 <div class="gameinfo">
-  <h1 id="timeleft">d
+  <h1 id="timeleft">
     1:00
   </h1>
   <h1 id="it" class="notit">
@@ -182,5 +183,6 @@
   <script src="/spawn.js"></script>
   <script src="/chat.js"></script>
   <script src="/tag/tag.js"></script>
+  <script src="/tag/map.js"></script>
 </body>
 </html>
