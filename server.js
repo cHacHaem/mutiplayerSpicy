@@ -56,6 +56,9 @@ io.on("connection", function (socket) {
 
         console.log(game.tag[world].players.length);
         io.to(world).emit("time to start", "waiting for players...",)
+        socket.on("rocks", (rockss)=>{
+          
+        })
         // Handle game start logic based on the number of players
         if (game.tag[world].players.length > 4) {
           startTag();
