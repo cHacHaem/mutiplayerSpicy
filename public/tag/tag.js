@@ -1,5 +1,6 @@
 /* global playerId socket player players */
 let whoIt = "";
+let done = false;
 let gameStarted = false;
 let it = document.getElementById("it")
 let timeLeftEl = document.getElementById("timeleft")
@@ -25,6 +26,23 @@ socket.on("game over", (game)=>{
 socket.on("time to start", (time)=>{
   if(time == "waiting for players...") {
     timeLeftEl.innerHTML = time;
+    if(!done) {
+    let map = document.getElementById("map")
+for(let i = 0; i < 30; i++){
+  let rock = document.createElement("a-entity")
+  rock.setAttribute("mixin", "rock")
+  let xp = (Math.random()*100)-50;
+  let yp = (Math.random()*100)-50;
+  rock.setAttribute("position", {x: xp, y: 0, z: yp})
+  let x, y, z = 0;
+  while(x < 1) x = Math.random()*3
+  while(y < 1) y = Math.random()*3
+  while(z < 1) z = Math.random()*3
+  rock.setAttribute("scale", {x: x, y: y, z})
+  map.appendChild(rock)
+  done = true;
+  socket.emit("rocks", {xp: xp, yp: yp, x: x, y: y, z: z})
+}}
   } else {
     timeLeftEl.innerHTML = "Time To Start: " + formatTime(time)
   }
