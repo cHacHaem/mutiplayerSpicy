@@ -51,8 +51,16 @@ io.on("connection", function (socket) {
        socket.join(world);
         socket.emit("world", world);  // Send the world info to the player
         socket.to(world).emit("chat message", {message: idToName[playerId]+" joined the game", id: "server", name: "server"})
-        if(game.tag[world].players.length > 0) socket.emit("chat message", {message: "You joined the game. Players: "+game.tag[world].players, id:"server", name: "server"})
-      else   socket.emit("chat message", {message: "Your the first one to join.", id:"server", name: "server"})
+      
+        if(game.tag[world].players.length > 0) {
+          let playersList = ""
+          game.tag[world].players.forEach((playerr)=>{
+            if(playersList == "") playersList = idToName[playerr]
+            else playersList = playersList+", "+idToName[playerr]
+          })
+          socket.emit("chat message", {message: "You joined the game. Players: "+playersList, id:"server", name: "server"})
+        }
+          else   socket.emit("chat message", {message: "Your the first one to join.", id:"server", name: "server"})
       // Add the player to the players array
         game.tag[world].players.push(playerId);
 
