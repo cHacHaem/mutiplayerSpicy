@@ -16,17 +16,7 @@ socket.on("game start", (itFirst)=>{
 })
 socket.on("world", (world)=>{
   it.innerHTML ="world: " + world
-})
-socket.on("game over", (game)=>{
-  gameStarted = false;
-  timeLeftEl.innerHTML = "";
-  it.setAttribute("class", "it");
-  it.innerHTML = "Game Over";
-})
-socket.on("time to start", (time)=>{
-  if(time == "waiting for players...") {
-    timeLeftEl.innerHTML = time;
-    if(!done) {
+      if(!done) {
     let map = document.getElementById("map")
 for(let i = 0; i < 30; i++){
   let rock = document.createElement("a-entity")
@@ -41,8 +31,17 @@ for(let i = 0; i < 30; i++){
   rock.setAttribute("scale", {x: x, y: y, z})
   map.appendChild(rock)
   done = true;
-  socket.emit("rocks", {xp: xp, yp: yp, x: x, y: y, z: z})
 }}
+})
+socket.on("game over", (game)=>{
+  gameStarted = false;
+  timeLeftEl.innerHTML = "";
+  it.setAttribute("class", "it");
+  it.innerHTML = "Game Over";
+})
+socket.on("time to start", (time)=>{
+  if(time == "waiting for players...") {
+    timeLeftEl.innerHTML = time;
   } else {
     timeLeftEl.innerHTML = "Time To Start: " + formatTime(time)
   }
