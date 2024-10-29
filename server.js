@@ -51,14 +51,13 @@ io.on("connection", function (socket) {
        socket.join(world);
         socket.emit("world", world);  // Send the world info to the player
         socket.to(world).emit("chat message", {message: idToName[playerId]+" joined the game", id: "server", name: "server"})
-        // Add the player to the players array
+        if(game.tag[world].players.length > 0) socket.emit("chat message", {message: "You joined the game. Players: "+game.tag[world].players, id:"server", name: "server"})
+      else   socket.emit("chat message", {message: "Your the first one to join.", id:"server", name: "server"})
+      // Add the player to the players array
         game.tag[world].players.push(playerId);
 
         console.log(game.tag[world].players.length);
         io.to(world).emit("time to start", "waiting for players...",)
-        socket.on("rocks", (rockss)=>{
-          
-        })
         // Handle game start logic based on the number of players
         if (game.tag[world].players.length > 4) {
           startTag();
