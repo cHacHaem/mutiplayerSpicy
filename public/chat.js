@@ -1,6 +1,7 @@
 let chatInput = document.getElementById("chat-input")
 let chatContent = document.getElementById("chat-content")
 let chatVisible = true;
+let socket = io();
 let overlay = document.getElementById("overlay")
 var params = new URLSearchParams(window.location.search);
 if (typeof params.get("devtools") == "string") {
