@@ -30,8 +30,12 @@ chatInput.addEventListener('keydown', function(event) {
     event.stopPropagation();  // Prevent the spacebar event from reaching the game
 });
 function sendMessage() {
- socket.emit("chat message", {message: chatInput.value, time: Date.now(), id: playerId, name: name}) 
-  showMessage({message: chatInput.value, time: Date.now(), id: playerId})
+  if(chatInput.value.split(" ")[0] == "/name") {
+    name = chatInput.value.split(" ")[1]
+  } else {
+    socket.emit("chat message", {message: chatInput.value, time: Date.now(), id: playerId, name: name}) 
+  showMessage({message: chatInput.value, time: Date.now(), id: playerId}) 
+  }
   chatInput.value = "";
 }
 socket.on("chat message", (message)=>{
