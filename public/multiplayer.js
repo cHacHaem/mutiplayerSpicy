@@ -2,7 +2,6 @@
 */
 const socket = io();
 const playerId = generateRandomString(20);
-let player = document.querySelector("#player");
 let cam = document.querySelector("#cam");
 let scene = document.querySelector("a-scene");
 let players = {};

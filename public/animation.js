@@ -1,6 +1,6 @@
 AFRAME.registerComponent('move', {
   schema: {
-    clip: { type: 'string', default: 'Idle' }  // Add clip attribute with default value "Move"
+    clip: { type: 'string', default: 'Idle' }  // Add clip attribute with default value "Idle"
   },
 
   init: function () {
@@ -23,16 +23,28 @@ AFRAME.registerComponent('move', {
     this.mixer = new THREE.AnimationMixer(model);
     const clips = model.animations;
 
-    // Get the clip name from the component's schema
-    const clipName = this.data.clip;
-
-    // Play the animation specified in the clip attribute
-    const selectedClip = clips.find(clip => clip.name === clipName);
-    if (selectedClip) {
-      const action = this.mixer.clipAction(selectedClip);
-      action.play();
+    // Check if clip attribute is set to "all" to play all animations
+    if (this.data.clip.toLowerCase() === "all") {
+      console.log("plauying them")
+      clips.forEach(clip => {
+        console.log(clip)
+        const action = this.mixer.clipAction(clip);
+        action.loop = THREE.LoopRepeat;
+        action.play();
+      });
+      console.log("Playing all animations on loop");
     } else {
-      console.warn(`Animation clip '${clipName}' not found on the model.`);
+      // Get the clip name from the component's schema
+      const clipName = this.data.clip;
+
+      // Play the specific animation specified in the clip attribute
+      const selectedClip = clips.find(clip => clip.name === clipName);
+      if (selectedClip) {
+        const action = this.mixer.clipAction(selectedClip);
+        action.play();
+      } else {
+        console.warn(`Animation clip '${clipName}' not found on the model.`);
+      }
     }
 
     this.clock = new THREE.Clock();
