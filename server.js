@@ -157,8 +157,8 @@ io.on("connection", function (socket) {
   });
 
   socket.on("disconnect", function (data) {
-  socket.to(world).emit("player left", playerId);
-
+  socket.to(world).emit("chat message", {message: idToName[playerId]+" left the game.", id: "server", name: "server"});
+  
   // Check if 'game[world]' exists before accessing 'players'
   if (game[world]) {
     removeString(game[world].players, playerId);
