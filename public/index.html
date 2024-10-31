@@ -28,7 +28,7 @@
       <a-asset-item id="tree" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/tree.glb?v=1725820185520"></a-asset-item>
       <a-asset-item id="rock" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/rock.glb?v=1725830236499"></a-asset-item>
       <img id="ground" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/ground.001.png?v=1725831593424">
-      <a-asset-item id="portal" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/portalAbstract.glb?v=1730408053300"></a-asset-item>
+      <a-asset-item id="portal" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/portalAbstract.glb?v=1730409169015"></a-asset-item>
     </a-assets>
 
     <a-sky color="lightblue"></a-sky>
@@ -37,7 +37,7 @@
     </a-sphere>
 
     <a-entity id="map">
-      <a-entity gltf-model="#portal" move="clip: all" position="-10 0 0"></a-entity>
+      <a-entity gltf-model="#portal" move="clip: all" position="-10 0 0" static-body="shape: box; halfExtents: 2 2 2"></a-entity>
       <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -0.5 0" width="200" height="1" depth="200"></a-box>
       </a-entity>
 
