@@ -28,7 +28,7 @@
       <a-asset-item id="tree" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/tree.glb?v=1725820185520"></a-asset-item>
       <a-asset-item id="rock" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/rock.glb?v=1725830236499"></a-asset-item>
       <img id="ground" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/ground.001.png?v=1725831593424">
-      <a-asset-item id="portal" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/portalAbstract.glb?v=1730409169015"></a-asset-item>
+      <a-asset-item id="portalModel" src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/portalAbstract.glb?v=1730409169015"></a-asset-item>
     </a-assets>
 
     <a-sky color="lightblue"></a-sky>
@@ -38,13 +38,14 @@
 
     <a-entity id="map">
      <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -0.5 0" width="200" height="1" depth="200"></a-box>
+    <a-box id="platform" color="orange" static-body scale="20 1 20"></a-box>
     </a-entity>
 
     <!-- Portal to /tag -->
-    <a-box id="portal2" always-face-camera visible="true" position="5 3 -5" depth="0.4" height="3" width="2.5" dynamic-body="mass: 0">
+    <a-box id="portal" visible="true" position="0 3 -20" depth="0.4" height="3" width="2.5" dynamic-body="mass: 0">
       <a-text visible="true" value="Tag" look-at="#cam" position="0 5 0" scale="3 3 3" align="center"></a-text>
     
-    <a-entity visible="true" id="portal4" gltf-model="#portal" move="clip: all" position="0 -2.5 0" rotation="0 -90 0" static-body="shape: box; half-extents: 2 2 2"></a-entity>
+    <a-entity visible="true" id="portal4" gltf-model="#portalModel" move="clip: all" position="0 -2.5 0" rotation="0 -90 0" static-body="shape: box; half-extents: 2 2 2"></a-entity>
         <a-text value="Tag" look-at="#cam" position="0 3 0" scale="3 3 3" align="center"></a-text>
     </a-box>
   </a-scene>
@@ -74,22 +75,6 @@
       }
     });
   </script>
-
-  <script>
-    AFRAME.registerComponent('always-face-camera', {
-      tick: function () {
-        const camera = document.querySelector('#cam');
-        const portal = this.el;
-
-        // Make the portal face the camera
-        if (camera && portal) {
-          const cameraPos = camera.object3D.getWorldPosition(new THREE.Vector3());
-          portal.object3D.lookAt(cameraPos);
-        }
-      }
-    });
-  </script>
-
   <script src="/multiplayer.js"></script>
   <script src="/movement.js"></script>
   <script src="/animation.js"></script>
