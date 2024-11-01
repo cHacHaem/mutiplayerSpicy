@@ -37,14 +37,15 @@
     </a-sphere>
 
     <a-entity id="map">
-      <a-entity id="portal" gltf-model="#portal" move="clip: all" position="-10 0 0" static-body="shape: box; half-extents: 2 2 2"></a-entity>
-      <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -0.5 0" width="200" height="1" depth="200"></a-box>
+     <a-box id="floor" src="#ground" material="shader: flat" static-body="mass: 0" position="0 -0.5 0" width="200" height="1" depth="200"></a-box>
     </a-entity>
 
     <!-- Portal to /tag -->
-    <a-box id="portal2" always-face-camera src="https://cdn.glitch.global/756a4aaf-b43f-4a95-998c-1c3ac912e721/tag.gif?v=1730234492668" animation__move="property: position; to: 5 3 -5; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate"
-      color="purple" position="5 2.5 -5" depth="0.5" height="5" width="2.5" dynamic-body="mass: 0">
-      <a-text value="Tag" look-at="#cam" position="0 3 0" scale="3 3 3" align="center"></a-text>
+    <a-box id="portal2" always-face-camera visible="true" position="5 3 -5" depth="0.4" height="3" width="2.5" dynamic-body="mass: 0">
+      <a-text visible="true" value="Tag" look-at="#cam" position="0 5 0" scale="3 3 3" align="center"></a-text>
+    
+    <a-entity visible="true" id="portal4" gltf-model="#portal" move="clip: all" position="0 -2.5 0" rotation="0 -90 0" static-body="shape: box; half-extents: 2 2 2"></a-entity>
+        <a-text value="Tag" look-at="#cam" position="0 3 0" scale="3 3 3" align="center"></a-text>
     </a-box>
   </a-scene>
 
