@@ -31,6 +31,8 @@ chatInput.addEventListener('keydown', function(event) {
 function sendMessage() {
   if(chatInput.value.split(" ")[0] == "/name") {
     name = chatInput.value.split(" ")[1]
+    localStorage.setItem("name", name);
+    showMessage({name: "server", message: "Your name has been set to "+name+", refresh for changes."})
   } else {
     socket.emit("chat message", {message: chatInput.value, time: Date.now(), id: playerId, name: name}) 
   showMessage({message: chatInput.value, time: Date.now(), id: playerId}) 
